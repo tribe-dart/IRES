@@ -3,94 +3,298 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1a1410" />
+    <title>IRES — Innovative Rammed Earth Solutions</title>
     <meta
       name="description"
-      content="Innovative Rammed Earth Solutions creates premium, self-sustaining environments across Africa through rammed earth construction and integrated design systems."
+      content="IRES builds rammed earth environments across Africa, joining architecture, energy, water, waste, landscape, and interiors into one self-sustaining system."
     />
-    <title>IRES - Innovative Rammed Earth Solutions</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="IRES — Innovative Rammed Earth Solutions" />
+    <meta
+      property="og:description"
+      content="Earth architecture and integrated systems for African development."
+    />
+    <meta property="og:image" content="assets/img/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="assets/fonts/fraunces-300-900.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="site-header" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="IRES home">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" id="site-header">
+      <a class="brand" href="#top" aria-label="IRES, home">
         <span class="brand-mark" aria-hidden="true">
-          <span></span><span></span><span></span>
+          <i class="band band-earth"></i>
+          <i class="band band-clay"></i>
+          <i class="band band-sage"></i>
         </span>
         <span class="brand-word">
           <strong>IRES</strong>
           <small>Innovative Rammed Earth Solutions</small>
         </span>
       </a>
-      <nav>
+
+      <nav class="site-nav" aria-label="Primary">
         <a href="#systems">Systems</a>
         <a href="#material">Material</a>
+        <a href="#work">Environments</a>
         <a href="#process">Process</a>
-        <a href="#contact">Contact</a>
       </nav>
+
+      <a class="nav-cta" href="#contact">Start a development</a>
+
+      <span class="scroll-progress" aria-hidden="true"><i></i></span>
     </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="hero-copy reveal">
-          <p class="eyebrow">Earth and engineering for African development</p>
-          <h1>Complete environments, built from the earth up.</h1>
-          <p class="hero-text">
-            IRES brings rammed earth construction together with architecture,
-            energy, water, waste, landscape, and interior systems to create
-            durable places that feel grounded, intelligent, and made to endure.
+    <main id="main">
+      <span id="top"></span>
+
+      <!-- ============ HERO ============ -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <picture>
+            <source srcset="assets/img/hero-earthcity.webp" type="image/webp" />
+            <img
+              src="assets/img/hero-earthcity.jpg"
+              alt=""
+              width="1920"
+              height="1080"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </div>
+
+        <div class="hero-inner">
+          <p class="eyebrow eyebrow-light">
+            <span class="eyebrow-mark" aria-hidden="true"></span>
+            Earth architecture and integrated systems
           </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="#contact">Start a development</a>
-            <a class="button secondary" href="#systems">Explore the system</a>
+          <h1 id="hero-title">Complete environments,<br />built from the earth up.</h1>
+          <p class="hero-lead">
+            IRES joins rammed earth construction with architecture, energy, water,
+            waste, landscape, and interiors. The result is one place that holds its
+            temperature, its ground, and its people.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-solid" href="#contact">Start a development</a>
+            <a class="button button-ghost" href="#systems">See how we build</a>
           </div>
         </div>
 
-        <div class="hero-panel reveal" aria-label="IRES layered system">
-          <div class="system-ribbon" aria-hidden="true">
-            <span class="layer layer-earth"></span>
-            <span class="layer layer-clay"></span>
-            <span class="layer layer-sage"></span>
-          </div>
-          <img
-            src="assets/rammed-earth-wall.png"
-            alt="Warm rammed earth building with layered earthen walls"
-          />
-          <div class="hero-card">
-            <span>Built for</span>
-            <strong>self-sustaining communities</strong>
-          </div>
+        <ul class="strata-rail" aria-label="The four layers of an IRES environment">
+          <li class="strata strata-earth">
+            <span class="strata-key">Layer 01</span>
+            <strong>Earth</strong>
+            <span>Soil from the site, screened, tested, and chosen for the wall it has to become.</span>
+          </li>
+          <li class="strata strata-clay">
+            <span class="strata-key">Layer 02</span>
+            <strong>Form</strong>
+            <span>Walls compacted in lifts, typically 350 to 600&nbsp;mm, never fired.</span>
+          </li>
+          <li class="strata strata-sage">
+            <span class="strata-key">Layer 03</span>
+            <strong>Systems</strong>
+            <span>Energy, water, waste, and landscape designed as part of the structure.</span>
+          </li>
+          <li class="strata strata-deep">
+            <span class="strata-key">Layer 04</span>
+            <strong>Finish</strong>
+            <span>Surfaces and interiors detailed to age well and stay maintainable.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ============ FOUNDATION ============ -->
+      <section class="foundation section" aria-labelledby="foundation-title">
+        <div class="foundation-copy reveal">
+          <p class="eyebrow">What IRES is</p>
+          <h2 id="foundation-title">Ancient material.<br />Modern system.</h2>
+        </div>
+        <div class="foundation-body reveal">
+          <p class="lead">
+            Rammed earth gives IRES its warmth, its mass, its texture, and its
+            honesty. We add the precision of engineering, so every development is
+            designed as one connected environment rather than a collection of
+            separate parts.
+          </p>
+          <dl class="spec-list">
+            <div>
+              <dt>Wall thickness</dt>
+              <dd>350 to 600&nbsp;mm, detailed to the climate of the site</dd>
+            </div>
+            <div>
+              <dt>Material</dt>
+              <dd>Site soil, screened and stabilised only where it needs to be</dd>
+            </div>
+            <div>
+              <dt>Process</dt>
+              <dd>Compacted in lifts between formwork. No firing, no cement block</dd>
+            </div>
+            <div>
+              <dt>Comfort</dt>
+              <dd>Thermal mass that flattens the swing between hot days and cool nights</dd>
+            </div>
+          </dl>
         </div>
       </section>
 
-      <section class="intro" aria-labelledby="intro-title">
-        <div class="section-kicker">Brand foundation</div>
-        <h2 id="intro-title">Ancient material. Modern system.</h2>
-        <p>
-          Rammed earth gives IRES its warmth, mass, texture, and honesty. The
-          company adds the precision of engineering: every development is treated
-          as a connected environment, not a collection of separate parts.
-        </p>
+      <!-- ============ ENVIRONMENTS ============ -->
+      <section class="work section" id="work" aria-labelledby="work-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Material tradition</p>
+          <h2 id="work-title">Earth is a building practice, not a trend.</h2>
+          <p class="section-note">
+            Across the Sahel, the savannah, and the modern courtyard, earth has been
+            built in layers from what the ground already gives. IRES works inside that
+            tradition and brings current engineering to it.
+          </p>
+        </div>
+
+        <div class="work-grid">
+          <figure class="tile tile-wide reveal">
+            <picture>
+              <source srcset="assets/img/oculus-courtyard.webp" type="image/webp" />
+              <img
+                src="assets/img/oculus-courtyard.jpg"
+                alt="Curved rammed earth courtyard walls opening to a large circular oculus above planted beds"
+                width="1500" height="844" loading="lazy" decoding="async"
+              />
+            </picture>
+            <figcaption>
+              <strong>Courtyard and oculus</strong>
+              <span>Daylight treated as a structural element</span>
+            </figcaption>
+          </figure>
+
+          <figure class="tile tile-tall reveal">
+            <picture>
+              <source srcset="assets/img/african-facade.webp" type="image/webp" />
+              <img
+                src="assets/img/african-facade.jpg"
+                alt="Mud brick building with a relief-patterned entrance facade and turret forms"
+                width="1400" height="933" loading="lazy" decoding="async"
+              />
+            </picture>
+            <figcaption>
+              <strong>Relief-patterned facade</strong>
+              <span>Surface depth used for shade and cooling</span>
+            </figcaption>
+          </figure>
+
+          <figure class="tile reveal">
+            <picture>
+              <source srcset="assets/img/sahel-village.webp" type="image/webp" />
+              <img
+                src="assets/img/sahel-village.jpg"
+                alt="Domed earthen structures standing in a dry valley below rocky hills"
+                width="1300" height="867" loading="lazy" decoding="async"
+              />
+            </picture>
+            <figcaption>
+              <strong>Domed earth cluster</strong>
+              <span>Geometry that sheds heat and rain</span>
+            </figcaption>
+          </figure>
+
+          <figure class="tile reveal">
+            <picture>
+              <source srcset="assets/img/ochre-compound.webp" type="image/webp" />
+              <img
+                src="assets/img/ochre-compound.jpg"
+                alt="Ochre earthen compound with crenellated parapet walls under a clear blue sky"
+                width="1400" height="933" loading="lazy" decoding="async"
+              />
+            </picture>
+            <figcaption>
+              <strong>Compound wall and parapet</strong>
+              <span>Enclosure, shade, and defence in one line</span>
+            </figcaption>
+          </figure>
+
+          <figure class="tile reveal">
+            <picture>
+              <source srcset="assets/img/earth-glowing-dusk.webp" type="image/webp" />
+              <img
+                src="assets/img/earth-glowing-dusk.jpg"
+                alt="Earth-sheltered building glowing with warm light against a blue dusk hillside"
+                width="1400" height="933" loading="lazy" decoding="async"
+              />
+            </picture>
+            <figcaption>
+              <strong>Earth-sheltered form</strong>
+              <span>The ground itself used as insulation</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <p class="work-note">Reference photography of earth architecture.</p>
       </section>
 
-      <section class="image-band" aria-label="Built environments">
-        <img
-          src="assets/residence-modern.png"
-          alt="Modern home with natural materials and landscaped lawn"
-        />
-        <img
-          src="assets/residence-courtyard.png"
-          alt="Single-storey residence with warm roof and garden"
-        />
+      <!-- ============ MATERIAL ============ -->
+      <section class="material section" id="material" aria-labelledby="material-title">
+        <div class="material-backdrop" aria-hidden="true">
+          <picture>
+            <source srcset="assets/img/earth-texture.webp" type="image/webp" />
+            <img
+              src="assets/img/earth-texture.jpg"
+              alt=""
+              width="1400" height="800" loading="lazy" decoding="async"
+            />
+          </picture>
+        </div>
+
+        <div class="material-media reveal">
+          <picture>
+            <source srcset="assets/img/arch-interior.webp" type="image/webp" />
+            <img
+              src="assets/img/arch-interior.jpg"
+              alt="Interior of an earth-walled gallery with a tall curved arch and soft daylight"
+              width="1000" height="1250" loading="lazy" decoding="async"
+            />
+          </picture>
+        </div>
+
+        <div class="material-copy reveal">
+          <p class="eyebrow eyebrow-light">Material intelligence</p>
+          <h2 id="material-title">A building language rooted in climate.</h2>
+          <p>
+            IRES uses rammed earth for more than its appearance. Mass, texture, and
+            local character support calm interiors, strong envelopes, and a direct
+            relationship with the land the building stands on.
+          </p>
+          <ul class="tick-list">
+            <li>Layered walls with genuine weight and structural presence</li>
+            <li>Passive comfort for hot days and cool nights</li>
+            <li>Energy, water, waste, and landscape planned with the architecture</li>
+            <li>Soil taken from near the work, so the building belongs to its place</li>
+          </ul>
+          <p class="material-foot">
+            Earth returns to earth. What we build is designed to be repaired, not
+            replaced.
+          </p>
+        </div>
       </section>
 
-      <section class="systems" id="systems" aria-labelledby="systems-title">
-        <div class="section-heading reveal">
-          <div class="section-kicker">Integrated delivery</div>
+      <!-- ============ SYSTEMS ============ -->
+      <section class="systems section" id="systems" aria-labelledby="systems-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Integrated delivery</p>
           <h2 id="systems-title">One team for the whole environment.</h2>
+          <p class="section-note">
+            The letters in our name are the order of work. Each one is settled before
+            the next is detail designed.
+          </p>
         </div>
+
         <div class="systems-grid">
-          <article class="system-card reveal">
+          <article class="system-card system-card-earth reveal">
+            <span class="card-band" aria-hidden="true"></span>
             <span class="card-index">I</span>
             <h3>Foundation</h3>
             <p>
@@ -98,7 +302,8 @@
               before individual components are designed.
             </p>
           </article>
-          <article class="system-card reveal">
+          <article class="system-card system-card-clay reveal">
+            <span class="card-band" aria-hidden="true"></span>
             <span class="card-index">R</span>
             <h3>Form</h3>
             <p>
@@ -106,7 +311,8 @@
               climate, comfort, durability, and place.
             </p>
           </article>
-          <article class="system-card reveal">
+          <article class="system-card system-card-sage reveal">
+            <span class="card-band" aria-hidden="true"></span>
             <span class="card-index">E</span>
             <h3>Structure</h3>
             <p>
@@ -114,124 +320,156 @@
               together as one practical system.
             </p>
           </article>
-          <article class="system-card reveal">
+          <article class="system-card system-card-deep reveal">
+            <span class="card-band" aria-hidden="true"></span>
             <span class="card-index">S</span>
             <h3>System</h3>
             <p>
-              Finished environments are designed to be premium, self-sustaining,
-              maintainable, and ready for long-term use.
+              Finished environments are premium, self-sustaining, and maintainable
+              for the long term.
             </p>
           </article>
         </div>
       </section>
 
-      <section class="material" id="material" aria-labelledby="material-title">
-        <div class="material-media reveal">
-          <img
-            src="assets/rammed-earth-wall.png"
-            alt="Rammed earth facade showing warm horizontal earth layers"
-          />
-        </div>
-        <div class="material-copy reveal">
-          <div class="section-kicker">Material intelligence</div>
-          <h2 id="material-title">A building language rooted in climate.</h2>
-          <p>
-            IRES uses rammed earth for more than its appearance. Its thermal
-            mass, texture, and local character support calm interiors, strong
-            envelopes, and a direct relationship with the land.
-          </p>
-          <ul class="material-list">
-            <li>Layered walls with natural warmth and structural presence</li>
-            <li>Passive comfort strategies for African climates</li>
-            <li>Complete site systems planned with the architecture</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="process" id="process" aria-labelledby="process-title">
-        <div class="section-heading reveal">
-          <div class="section-kicker">How IRES works</div>
+      <!-- ============ PROCESS ============ -->
+      <section class="process section" id="process" aria-labelledby="process-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">How IRES works</p>
           <h2 id="process-title">Clear stages, connected decisions.</h2>
         </div>
+
         <ol class="process-track">
           <li class="reveal">
-            <span>01</span>
+            <span class="step-rail" aria-hidden="true"></span>
+            <span class="step-num">01</span>
             <h3>Read the land</h3>
-            <p>Study climate, soil, water, access, community, and ambition.</p>
+            <p>Climate, soil, water, access, community, and ambition.</p>
           </li>
           <li class="reveal">
-            <span>02</span>
+            <span class="step-rail" aria-hidden="true"></span>
+            <span class="step-num">02</span>
             <h3>Design the whole</h3>
-            <p>Bring architecture and core infrastructure into one brief.</p>
+            <p>Architecture and the core infrastructure held in one brief.</p>
           </li>
           <li class="reveal">
-            <span>03</span>
+            <span class="step-rail" aria-hidden="true"></span>
+            <span class="step-num">03</span>
             <h3>Build in layers</h3>
-            <p>Coordinate material, engineering, landscape, and finishes.</p>
+            <p>Material, engineering, landscape, and finishes, coordinated.</p>
           </li>
           <li class="reveal">
-            <span>04</span>
+            <span class="step-rail" aria-hidden="true"></span>
+            <span class="step-num">04</span>
             <h3>Hand over a system</h3>
-            <p>Deliver a complete environment built for use and maintenance.</p>
+            <p>A complete environment, with the maintenance it needs.</p>
           </li>
         </ol>
       </section>
 
-      <section class="proof" aria-labelledby="proof-title">
-        <div class="proof-copy reveal">
-          <div class="section-kicker">Voice and tone</div>
-          <h2 id="proof-title">Grounded, premium, intelligent, human.</h2>
+      <!-- ============ WHY ============ -->
+      <section class="why section" aria-labelledby="why-title">
+        <div class="why-copy reveal">
+          <p class="eyebrow eyebrow-light">What we are for</p>
+          <h2 id="why-title">Grounded, premium, intelligent, human.</h2>
           <p>
-            IRES speaks with the confidence of a company that understands both
-            earth and engineering. Every message is clear, considered, and built
+            IRES speaks with the confidence of a company that understands both earth
+            and engineering. Every message is considered, and every detail is built
             to last.
           </p>
+          <blockquote class="why-quote">
+            <p>Africa is the ground for a new standard of sustainable building.</p>
+          </blockquote>
         </div>
-        <div class="proof-stat reveal">
-          <strong>Africa</strong>
-          <span>is the ground for a new standard of sustainable building.</span>
-        </div>
+
+        <figure class="why-media reveal">
+          <picture>
+            <source srcset="assets/img/earthen-arch.webp" type="image/webp" />
+            <img
+              src="assets/img/earthen-arch.jpg"
+              alt="Tall rammed earth wall with a deep arch opening catching low sunlight"
+              width="900" height="1350" loading="lazy" decoding="async"
+            />
+          </picture>
+        </figure>
       </section>
 
+      <!-- ============ CONTACT ============ -->
       <section class="contact" id="contact" aria-labelledby="contact-title">
-        <div class="contact-copy reveal">
-          <div class="section-kicker">Begin with the site</div>
-          <h2 id="contact-title">Plan a development that works as one.</h2>
-          <p>
-            Tell IRES what you want to build, where it will live, and which
-            systems need to be part of the solution from day one.
-          </p>
+        <div class="contact-panel">
+          <div class="contact-copy reveal">
+            <p class="eyebrow eyebrow-light">Begin with the site</p>
+            <h2 id="contact-title">Plan a development that works as one.</h2>
+            <p>
+              Tell IRES what you want to build, where it will live, and which systems
+              need to be part of the solution from day one.
+            </p>
+            <ol class="next-steps">
+              <li><span>1</span> We read your note and study the site.</li>
+              <li><span>2</span> We come back with the questions that matter.</li>
+              <li><span>3</span> You get a first view of the systems that fit.</li>
+            </ol>
+          </div>
+
+          <form class="contact-form reveal" novalidate>
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" type="text" name="name" autocomplete="name" required />
+              <p class="field-error" data-error-for="f-name"></p>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" type="email" name="email" autocomplete="email" required />
+                <p class="field-error" data-error-for="f-email"></p>
+              </div>
+              <div class="field">
+                <label for="f-type">Project type</label>
+                <select id="f-type" name="project-type">
+                  <option>Residential development</option>
+                  <option>Community infrastructure</option>
+                  <option>Hospitality or retreat</option>
+                  <option>Integrated masterplan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-site">Site location</label>
+              <input id="f-site" type="text" name="site" placeholder="Town, state, or region" />
+            </div>
+
+            <div class="field">
+              <label for="f-message">Message</label>
+              <textarea id="f-message" name="message" rows="4" required></textarea>
+              <p class="field-error" data-error-for="f-message"></p>
+            </div>
+
+            <button type="submit">Send project note</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
         </div>
-        <form class="contact-form reveal">
-          <label>
-            Name
-            <input type="text" name="name" autocomplete="name" />
-          </label>
-          <label>
-            Email
-            <input type="email" name="email" autocomplete="email" />
-          </label>
-          <label>
-            Project type
-            <select name="project-type">
-              <option>Residential development</option>
-              <option>Community infrastructure</option>
-              <option>Hospitality or retreat</option>
-              <option>Integrated masterplan</option>
-            </select>
-          </label>
-          <label>
-            Message
-            <textarea name="message" rows="4"></textarea>
-          </label>
-          <button type="submit">Send project note</button>
-        </form>
       </section>
     </main>
 
-    <footer>
-      <span>IRES</span>
-      <p>Innovative Rammed Earth Solutions</p>
+    <footer class="site-footer">
+      <span class="footer-bands" aria-hidden="true">
+        <i class="band band-earth"></i>
+        <i class="band band-clay"></i>
+        <i class="band band-sage"></i>
+      </span>
+      <div class="footer-row">
+        <span class="footer-mark">IRES</span>
+        <nav aria-label="Footer">
+          <a href="#systems">Systems</a>
+          <a href="#material">Material</a>
+          <a href="#work">Environments</a>
+          <a href="#process">Process</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-line">Innovative Rammed Earth Solutions — earth and engineering, built as one.</p>
     </footer>
 
     <script src="script.js"></script>

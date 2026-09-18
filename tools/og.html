@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>IRES — social card</title>
+    <style>
+      /* Regenerate with:
+         chrome --headless=new --screenshot=assets/img/og.png --window-size=1200,630 \
+           --hide-scrollbars --virtual-time-budget=8000 \
+           --user-data-dir=/tmp/chrome-og "file:///<repo>/tools/og.html"
+      */
+      @font-face {
+        font-family: "Fraunces";
+        src: url("../assets/fonts/fraunces-300-900.woff2") format("woff2");
+        font-weight: 300 900;
+      }
+      @font-face {
+        font-family: "Poppins";
+        src: url("../assets/fonts/poppins-600.woff2") format("woff2");
+        font-weight: 500 600;
+      }
+      @font-face {
+        font-family: "Poppins";
+        src: url("../assets/fonts/poppins-800.woff2") format("woff2");
+        font-weight: 700 900;
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        width: 1200px;
+        height: 630px;
+        display: grid;
+        grid-template-columns: 660px 1fr;
+        overflow: hidden;
+        background: #191310;
+        font-family: "Poppins", sans-serif;
+      }
+      .panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 66px 56px 0 72px;
+        color: #f6efe4;
+      }
+      .mark { display: grid; gap: 7px; width: 92px; margin-bottom: 40px; }
+      .mark i { display: block; height: 18px; border-radius: 999px 4px 4px 999px; }
+      .mark i:nth-child(1) { background: #6b4e2e; }
+      .mark i:nth-child(2) { background: #9c5b34; }
+      .mark i:nth-child(3) { background: #3d5a47; }
+      h1 {
+        font-family: "Fraunces", serif;
+        font-size: 74px;
+        font-weight: 600;
+        line-height: 0.97;
+        letter-spacing: -0.02em;
+      }
+      h1 em { font-style: normal; color: #d9a154; }
+      .tag {
+        margin-top: 26px;
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1.45;
+        color: rgba(246, 239, 228, 0.74);
+        max-width: 24ch;
+      }
+      .wordmark {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 22px 0 26px;
+      }
+      .wordmark strong {
+        font-family: "Fraunces", serif;
+        font-size: 32px;
+        font-weight: 700;
+      }
+      .wordmark span {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(246, 239, 228, 0.55);
+      }
+      .bands { display: grid; gap: 6px; padding-bottom: 34px; }
+      .bands i { display: block; height: 14px; border-radius: 999px 4px 4px 999px; }
+      .bands i:nth-child(1) { background: #6b4e2e; }
+      .bands i:nth-child(2) { background: #9c5b34; }
+      .bands i:nth-child(3) { background: #3d5a47; }
+      .photo { position: relative; }
+      .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 58% 48%; }
+      .photo::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, #191310 0%, rgba(25, 19, 16, 0.1) 34%);
+        content: "";
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div>
+        <div class="mark"><i></i><i></i><i></i></div>
+        <h1>Built from the <em>earth</em> up.</h1>
+        <p class="tag">Rammed earth environments and integrated systems across Africa.</p>
+      </div>
+      <div class="wordmark"><strong>IRES</strong><span>Innovative Rammed Earth Solutions</span></div>
+      <div class="bands"><i></i><i></i><i></i></div>
+    </div>
+    <div class="photo">
+      <img src="../assets/img/hero-earthcity.jpg" alt="" />
+    </div>
+  </body>
+</html>
