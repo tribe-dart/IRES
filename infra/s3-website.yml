@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'IRES Static Website S3 Bucket for Cloudflare CDN'
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: 'production'
+    Description: 'Deployment environment'
+
+Resources:
+  # 1. S3 Bucket configured for Static Website Hosting
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'iresglobal-frontend-${AWS::AccountId}'
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: 404.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      Tags:
+        - Key: Project
+          Value: IRES
+        - Key: Environment
+          Value: !Ref EnvironmentName
+
+  # 2. Public Read Bucket Policy for Website Hosting
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: PublicReadForWebsite
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Sub '${WebsiteBucket.Arn}/*'
+
+Outputs:
+  BucketName:
+    Description: 'S3 Bucket Name for GitHub Actions deployment'
+    Value: !Ref WebsiteBucket
+    Export:
+      Name: IresWebsiteBucketName
+
+  WebsiteURL:
+    Description: 'S3 Website Endpoint URL (Origin for Cloudflare)'
+    Value: !GetAtt WebsiteBucket.WebsiteURL
+    Export:
+      Name: IresWebsiteURL
+
+  WebsiteHostname:
+    Description: 'S3 Website Hostname (use this for Cloudflare CNAME target)'
+    Value: !Select [1, !Split ['//', !GetAtt WebsiteBucket.WebsiteURL]]
+    Export:
+      Name: IresWebsiteHostname

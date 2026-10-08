@@ -1,0 +1,6 @@
+{
+  "RedirectAllRequestsTo": {
+    "HostName": "iresglobal.com",
+    "Protocol": "https"
+  }
+}

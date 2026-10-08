@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'IRES ACM SSL Certificate in us-east-1 for CloudFront'
+
+Parameters:
+  DomainName:
+    Type: String
+    Default: 'iresglobal.com'
+    Description: 'Primary apex domain name'
+
+  AlternativeDomainName:
+    Type: String
+    Default: 'www.iresglobal.com'
+    Description: 'Alternative domain name (SAN)'
+
+Resources:
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      SubjectAlternativeNames:
+        - !Ref AlternativeDomainName
+      ValidationMethod: DNS
+      Tags:
+        - Key: Project
+          Value: IRES
+
+Outputs:
+  CertificateArn:
+    Description: 'ARN of the ACM Certificate (us-east-1)'
+    Value: !Ref Certificate
+    Export:
+      Name: IresAcmCertificateArn
