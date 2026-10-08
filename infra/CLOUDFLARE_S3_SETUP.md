@@ -1,7 +1,7 @@
 # Cloudflare CDN + AWS S3 Website Setup for IRES (`iresglobal.com`)
 
 Your static website is hosted in **AWS S3** and is live at:
-`http://iresglobal-frontend-622211271637.s3-website-eu-west-1.amazonaws.com`
+`http://iresglobal.com.s3-website-eu-west-1.amazonaws.com`
 
 By placing **Cloudflare CDN** in front of this bucket, you get:
 - Free automated SSL/TLS certificate (`https://iresglobal.com`).
@@ -18,8 +18,8 @@ In your **Cloudflare Dashboard** under **DNS** > **Records**, add or update the 
 
 | Type | Name | Target | Proxy Status | TTL |
 | :--- | :--- | :--- | :--- | :--- |
-| **CNAME** | `@` *(or iresglobal.com)* | `iresglobal-frontend-622211271637.s3-website-eu-west-1.amazonaws.com` | **Proxied (Orange Cloud)** | Auto |
-| **CNAME** | `www` | `iresglobal-frontend-622211271637.s3-website-eu-west-1.amazonaws.com` | **Proxied (Orange Cloud)** | Auto |
+| **CNAME** | `@` *(or iresglobal.com)* | `iresglobal.com.s3-website-eu-west-1.amazonaws.com` | **Proxied (Orange Cloud)** | Auto |
+| **CNAME** | `www` | `iresglobal.com.s3-website-eu-west-1.amazonaws.com` | **Proxied (Orange Cloud)** | Auto |
 
 ---
 
