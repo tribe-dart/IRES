@@ -122,6 +122,7 @@ if (form) {
     const lines = [
       `Name: ${name}`,
       `Email: ${data.get("email")}`,
+      `Phone / WhatsApp: ${data.get("phone") || "Not given"}`,
       `Project type: ${data.get("project-type")}`,
       `Site location: ${data.get("site") || "Not given"}`,
       "",

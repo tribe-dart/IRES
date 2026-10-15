@@ -521,11 +521,28 @@ h3 {
 }
 
 /* The strata rail — hero signature element */
+.strata-intro {
+  margin-top: clamp(2.4rem, 6vh, 4rem);
+  padding: 0.9rem 0 0.5rem;
+  color: var(--sun);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-top: 1px solid rgba(246, 239, 228, 0.2);
+}
+
 .strata-rail {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin-top: clamp(2.4rem, 6vh, 4.2rem);
   border-top: 1px solid rgba(246, 239, 228, 0.2);
+}
+
+.strata-rail-3 {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 0;
+  border-top: none;
 }
 
 .strata {
@@ -1306,6 +1323,524 @@ textarea:focus {
   clip-path: inset(0 0 0 0);
 }
 
+/* ---------- Values strip ---------- */
+.values-strip {
+  margin-top: clamp(1.8rem, 3.5vw, 2.8rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--rule);
+}
+
+.values-title {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-bottom: 0.5rem;
+}
+
+.values-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  color: var(--earth-deep);
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.values-items span:not(:last-child)::after {
+  content: "·";
+  margin-left: 0.8rem;
+  color: var(--clay-hot);
+}
+
+/* ---------- Problems We Solve ---------- */
+.problems-section {
+  background: var(--cream);
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.problem-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem 1.6rem;
+  background: var(--sand);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--clay);
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+.problem-card:hover {
+  background: #fff;
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+.problem-card:nth-child(2n) {
+  border-left-color: var(--deep-earth);
+}
+.problem-card:nth-child(3n) {
+  border-left-color: var(--sage);
+}
+.problem-card:nth-child(4n) {
+  border-left-color: var(--sun);
+}
+
+.problem-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--clay-hot);
+  margin-bottom: 0.4rem;
+}
+
+.problem-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--earth-deep);
+  margin-bottom: 0.65rem;
+  line-height: 1.3;
+}
+
+.problem-answer {
+  color: var(--text);
+  font-size: 0.94rem;
+  line-height: 1.62;
+}
+
+/* ---------- Why Rammed Earth Benefits ---------- */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.4rem);
+  margin-top: 2.2rem;
+}
+
+.benefit-card {
+  padding: 1.6rem 1.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--rule-dark);
+  border-radius: var(--radius);
+  transition: transform 220ms ease, background 220ms ease;
+}
+
+.benefit-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-3px);
+}
+
+.benefit-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  color: var(--sun);
+  margin-bottom: 0.6rem;
+}
+
+.benefit-card p {
+  color: var(--text-on-dark-soft);
+  font-size: 0.91rem;
+  line-height: 1.62;
+}
+
+/* ---------- Solutions 8 Cards & Details ---------- */
+.solutions-grid-8 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.4vw, 1.1rem);
+}
+
+.solution-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 15rem;
+  padding: 1.5rem 1.35rem 1.6rem;
+  background: var(--sand);
+  border-radius: var(--radius);
+  transition: transform 260ms ease, box-shadow 260ms ease, background 260ms ease;
+}
+
+.solution-card:hover {
+  background: var(--cream);
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
+
+.solution-card .card-index {
+  margin-bottom: 0.8rem;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  line-height: 1;
+}
+
+.solution-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.solution-card p {
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  line-height: 1.58;
+}
+
+.solution-details {
+  margin-top: clamp(2.8rem, 6vw, 4.5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--rule);
+}
+
+.detail-block-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.4vw, 2rem);
+  margin-top: 1.8rem;
+}
+
+.detail-block {
+  padding: 2rem 1.8rem;
+  background: var(--sand);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(107, 78, 46, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.detail-block-full {
+  grid-column: 1 / -1;
+}
+
+.detail-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+.detail-block h4 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--earth-deep);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.detail-lead {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.detail-features {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.4rem;
+}
+
+.detail-feature {
+  padding: 0.85rem 1.1rem;
+  background: var(--cream);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  border-left: 3px solid var(--clay-hot);
+  color: var(--text);
+}
+
+.detail-feature strong {
+  color: var(--earth-deep);
+}
+
+.detail-checklist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--cream);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--earth-deep);
+}
+
+.detail-checklist span:not(:last-child)::after {
+  content: "·";
+  margin-left: 1rem;
+  color: var(--clay);
+}
+
+/* ---------- Who We Build For ---------- */
+.audiences-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.8rem);
+}
+
+.audience-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2.2rem 1.8rem;
+  background: var(--sand);
+  border-radius: var(--radius-lg);
+  border-top: 5px solid var(--deep-earth);
+  transition: transform 240ms ease, box-shadow 240ms ease, background 240ms ease;
+}
+
+.audience-card:nth-child(2) { border-top-color: var(--clay); }
+.audience-card:nth-child(3) { border-top-color: var(--sage); }
+
+.audience-card:hover {
+  background: var(--cream);
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
+
+.audience-badge {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-bottom: 0.8rem;
+}
+
+.audience-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  margin-bottom: 0.8rem;
+  color: var(--earth-deep);
+}
+
+.audience-card p {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* ---------- Finance ---------- */
+.finance-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.6vw, 1.4rem);
+}
+
+.finance-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.8rem 1.5rem;
+  background: var(--sand);
+  border-radius: var(--radius);
+  border-top: 4px solid var(--clay-hot);
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+.finance-card:hover {
+  background: var(--cream);
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
+
+.finance-card:nth-child(2) { border-top-color: var(--deep-earth); }
+.finance-card:nth-child(3) { border-top-color: var(--sage); }
+.finance-card:nth-child(4) { border-top-color: var(--sun); }
+
+.finance-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.25rem 0.65rem;
+  background: rgba(107, 78, 46, 0.12);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--earth-deep);
+  margin-bottom: 0.9rem;
+}
+
+.finance-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  margin-bottom: 0.6rem;
+}
+
+.finance-card p {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ---------- Heritage & Ghana ---------- */
+.heritage-timeline {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 12rem 14rem 1fr;
+  gap: 1.2rem;
+  align-items: baseline;
+  padding: 1.1rem 1.4rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--rule-dark);
+  border-radius: var(--radius);
+  transition: background 200ms ease;
+}
+
+.timeline-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.timeline-period {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sun);
+}
+
+.timeline-where {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.timeline-desc {
+  color: var(--text-on-dark-soft);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.ghana-section {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--rule-dark);
+}
+
+.ghana-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.4rem);
+  margin-top: 2rem;
+}
+
+.ghana-card {
+  padding: 1.5rem 1.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--rule-dark);
+  border-left: 4px solid var(--sun);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.ghana-card:hover {
+  background: rgba(255, 255, 255, 0.09);
+  transform: translateY(-2px);
+}
+
+.ghana-place {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 0.25rem;
+}
+
+.ghana-region {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sun);
+}
+
+/* ---------- Closing Summary ---------- */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+  margin-top: 2.5rem;
+}
+
+.summary-card {
+  padding: 1.6rem 1.4rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--rule-dark);
+  border-radius: var(--radius);
+  transition: transform 220ms ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.summary-title {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin-bottom: 0.5rem;
+}
+
+.summary-desc {
+  color: var(--cream);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* ---------- Contact Direct ---------- */
+.contact-direct {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-dark);
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-direct-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-direct-label {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin-bottom: 0.2rem;
+}
+
+.contact-direct-value {
+  color: var(--text-on-dark);
+  font-size: 0.94rem;
+  font-weight: 500;
+}
+
 /* ==========================================================================
    Responsive
    ========================================================================== */
@@ -1331,8 +1866,22 @@ textarea:focus {
   }
 
   .systems-grid,
-  .process-track {
+  .process-track,
+  .solutions-grid-8,
+  .finance-grid,
+  .ghana-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detail-block-grid,
+  .audiences-grid,
+  .benefits-grid,
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .timeline-row {
+    grid-template-columns: 10rem 12rem 1fr;
   }
 
   .section-head {
@@ -1406,12 +1955,21 @@ textarea:focus {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .strata-rail-3 {
+    grid-template-columns: 1fr;
+  }
+
   .strata {
     padding-bottom: 1.2rem;
   }
 
   .strata:nth-child(2) {
     border-right: 0;
+  }
+
+  .timeline-row {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
   }
 }
 
@@ -1433,7 +1991,8 @@ textarea:focus {
     width: 100%;
   }
 
-  .strata-rail {
+  .strata-rail,
+  .strata-rail-3 {
     grid-template-columns: 1fr;
   }
 
@@ -1445,7 +2004,15 @@ textarea:focus {
 
   .systems-grid,
   .process-track,
-  .field-row {
+  .field-row,
+  .problems-grid,
+  .benefits-grid,
+  .solutions-grid-8,
+  .detail-block-grid,
+  .audiences-grid,
+  .finance-grid,
+  .ghana-grid,
+  .summary-grid {
     grid-template-columns: 1fr;
   }
 
