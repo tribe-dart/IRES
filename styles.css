@@ -546,9 +546,13 @@ h3 {
 }
 
 .strata {
-  padding: 1.1rem 1.3rem 1.5rem 0;
+  padding: 1.4rem 1.4rem 1.6rem 0;
   border-top: 5px solid var(--deep-earth);
   border-right: 1px solid rgba(246, 239, 228, 0.14);
+}
+
+.strata:not(:first-child) {
+  padding-left: clamp(1.4rem, 2.6vw, 2.6rem);
 }
 
 .strata:last-child {
@@ -1959,6 +1963,10 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
+  .strata-rail-3 .strata:not(:first-child) {
+    padding-left: 0;
+  }
+
   .strata {
     padding-bottom: 1.2rem;
   }
@@ -1996,7 +2004,8 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  .strata {
+  .strata,
+  .strata:not(:first-child) {
     padding: 0.9rem 0 1rem;
     border-right: 0;
     border-bottom: 1px solid rgba(246, 239, 228, 0.14);
