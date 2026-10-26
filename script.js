@@ -9,7 +9,7 @@
    the form tells the visitor the address is not set yet instead of pretending
    the note was delivered.
    -------------------------------------------------------------------------- */
-const CONTACT_EMAIL = "";
+const CONTACT_EMAIL = "contact@iresglobal.com";
 
 /* ---------- Reveal on scroll ---------- */
 const revealItems = Array.from(document.querySelectorAll(".reveal"));
@@ -65,6 +65,39 @@ window.addEventListener(
 
 window.addEventListener("resize", updateHeader, { passive: true });
 updateHeader();
+
+/* ---------- Mobile menu ---------- */
+const navToggle = document.querySelector(".nav-toggle");
+const siteNav = document.getElementById("site-nav");
+
+if (navToggle && siteNav && header) {
+  const setMenuOpen = (open) => {
+    header.classList.toggle("is-open", open);
+    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    navToggle.querySelector(".nav-toggle-label").textContent = open ? "Close menu" : "Menu";
+    if (!open && siteNav.contains(document.activeElement)) navToggle.focus();
+  };
+
+  navToggle.addEventListener("click", () => {
+    setMenuOpen(!header.classList.contains("is-open"));
+  });
+
+  siteNav.addEventListener("click", (event) => {
+    if (event.target.closest("a")) setMenuOpen(false);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!header.contains(event.target)) setMenuOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenuOpen(false);
+  });
+
+  window.matchMedia("(min-width: 1101px)").addEventListener("change", (event) => {
+    if (event.matches) setMenuOpen(false);
+  });
+}
 
 /* ---------- Contact form ---------- */
 const form = document.querySelector(".contact-form");

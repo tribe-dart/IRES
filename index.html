@@ -20,7 +20,7 @@
     <link rel="icon" href="assets/logo/Ires%20icon.svg" type="image/svg+xml" />
     <link rel="preload" href="assets/fonts/fraunces-300-900.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=2.0" />
+    <link rel="stylesheet" href="styles.css?v=2.1" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -36,7 +36,7 @@
         </span>
       </a>
 
-      <nav class="site-nav" aria-label="Primary">
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
         <a href="#why-rammed-earth">Why rammed earth</a>
         <a href="#solutions">Solutions</a>
         <a href="#who-we-build-for">Who we build for</a>
@@ -46,6 +46,11 @@
       </nav>
 
       <a class="nav-cta" href="#contact">Let’s build your home</a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-label">Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true"></span>
+      </button>
 
       <span class="scroll-progress" aria-hidden="true"><i></i></span>
     </header>
@@ -797,16 +802,22 @@
 
             <div class="contact-direct">
               <div class="contact-direct-item">
-                <span class="contact-direct-label">Location</span>
-                <span class="contact-direct-value">Accra, Ghana · West Africa</span>
+                <span class="contact-direct-label">Office</span>
+                <span class="contact-direct-value">
+                  <a href="https://maps.google.com/?q=54+5th+Circular+Road+Cantonments+Accra" rel="noopener noreferrer">54, 5th Circular Road, Cantonments, Accra</a>
+                </span>
               </div>
               <div class="contact-direct-item">
                 <span class="contact-direct-label">Phone / WhatsApp</span>
-                <span class="contact-direct-value">+233 (0) 55 000 0000 <em>(Pending confirmation)</em></span>
+                <span class="contact-direct-value">
+                  <a href="tel:+233209669000">+233 20 966 9000</a>
+                </span>
               </div>
               <div class="contact-direct-item">
                 <span class="contact-direct-label">Email</span>
-                <span class="contact-direct-value">info@iresglobal.com <em>(Pending confirmation)</em></span>
+                <span class="contact-direct-value">
+                  <a href="mailto:contact@iresglobal.com">contact@iresglobal.com</a>
+                </span>
               </div>
             </div>
           </div>
