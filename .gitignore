@@ -1,1 +1,6 @@
 tmp/
+infra/enquiry/.terraform/
+infra/enquiry/*.tfstate
+infra/enquiry/*.tfstate.*
+infra/enquiry/enquiry.zip
+infra/enquiry/.terraform.lock.hcl

@@ -1269,8 +1269,62 @@ textarea:focus {
 }
 
 .field.has-error input,
-.field.has-error textarea {
+.field.has-error textarea,
+.field.has-error select {
   border-color: #b23c2a;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.45;
+  text-transform: none;
+}
+
+.consent input {
+  width: 1.05rem;
+  min-height: 1.05rem;
+  margin-top: 0.2rem;
+  flex: none;
+}
+
+.consent a {
+  color: var(--earth-deep);
+}
+
+.hp-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.legal {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: clamp(7rem, 14vw, 9rem) var(--shell) clamp(3rem, 8vw, 5rem);
+}
+
+.legal h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+}
+
+.legal p,
+.legal li {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.legal ul {
+  padding-left: 1.2rem;
+  list-style: disc;
 }
 
 .field-error {

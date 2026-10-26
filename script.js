@@ -3,13 +3,9 @@
    Everything degrades to plain, readable HTML with JS disabled.
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   CONTACT DESTINATION
-   Set this to the inbox that should receive project notes. While it is empty
-   the form tells the visitor the address is not set yet instead of pretending
-   the note was delivered.
-   -------------------------------------------------------------------------- */
-const CONTACT_EMAIL = "contact@iresglobal.com";
+/* Enquiry API. Mail is sent by the API once Cloudflare Email Sending is configured. */
+const ENQUIRY_API = "https://2s128tbbya.execute-api.eu-west-1.amazonaws.com/enquiries";
+const PRIVACY_VERSION = "2026-10-26";
 
 /* ---------- Reveal on scroll ---------- */
 const revealItems = Array.from(document.querySelectorAll(".reveal"));
@@ -104,7 +100,8 @@ const form = document.querySelector(".contact-form");
 
 if (form) {
   const status = form.querySelector(".form-status");
-  const fields = ["f-name", "f-email", "f-message"].map((id) => document.getElementById(id));
+  const submitButton = form.querySelector("button[type='submit']");
+  const requiredFields = ["f-name", "f-site", "f-message"].map((id) => document.getElementById(id));
 
   const setError = (input, message) => {
     const holder = input.closest(".field");
@@ -116,29 +113,40 @@ if (form) {
 
   const validate = () => {
     let firstBad = null;
-    fields.forEach((input) => {
-      const value = input.value.trim();
-      let message = "";
+    const email = document.getElementById("f-email");
+    const phone = document.getElementById("f-phone");
+    const consent = document.getElementById("f-consent");
 
-      if (!value) {
-        message = "This field is needed.";
-      } else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
-        message = "Enter an email address we can reply to.";
-      }
-
+    requiredFields.forEach((input) => {
+      const message = input.value.trim() ? "" : "This field is needed.";
       setError(input, message);
       if (message && !firstBad) firstBad = input;
     });
+
+    const emailValue = email.value.trim();
+    let emailMessage = "";
+    if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailValue)) {
+      emailMessage = "Enter an email address we can reply to.";
+    } else if (!emailValue && !phone.value.trim()) {
+      emailMessage = "Add an email address or a phone number.";
+    }
+    setError(email, emailMessage);
+    if (emailMessage && !firstBad) firstBad = email;
+
+    const consentMessage = consent.checked ? "" : "Please agree to the privacy policy.";
+    setError(consent, consentMessage);
+    if (consentMessage && !firstBad) firstBad = consent;
+
     return firstBad;
   };
 
-  fields.forEach((input) => {
+  [...requiredFields, document.getElementById("f-email"), document.getElementById("f-phone"), document.getElementById("f-consent")].forEach((input) => {
     input.addEventListener("input", () => {
       if (input.closest(".field")?.classList.contains("has-error")) setError(input, "");
     });
   });
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     status.classList.remove("is-error");
 
@@ -151,30 +159,51 @@ if (form) {
     }
 
     const data = new FormData(form);
-    const name = String(data.get("name") || "").trim();
-    const lines = [
-      `Name: ${name}`,
-      `Email: ${data.get("email")}`,
-      `Phone / WhatsApp: ${data.get("phone") || "Not given"}`,
-      `Project type: ${data.get("project-type")}`,
-      `Site location: ${data.get("site") || "Not given"}`,
-      "",
-      String(data.get("message") || ""),
-    ];
+    const params = new URLSearchParams(window.location.search);
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      phone: String(data.get("phone") || "").trim(),
+      enquiryType: String(data.get("project-type") || ""),
+      location: String(data.get("site") || "").trim(),
+      message: String(data.get("message") || "").trim(),
+      country: String(data.get("country") || ""),
+      preferredContact: String(data.get("preferred-contact") || ""),
+      consent: data.get("consent") === "yes",
+      privacyPolicyVersion: PRIVACY_VERSION,
+      company_website: String(data.get("company_website") || ""),
+      sourcePage: window.location.href.split("#")[0],
+      referrer: document.referrer || "",
+      utmSource: params.get("utm_source") || "",
+      utmMedium: params.get("utm_medium") || "",
+      utmCampaign: params.get("utm_campaign") || "",
+    };
 
-    if (!CONTACT_EMAIL) {
-      // No verified IRES inbox yet, so nothing is sent and we say so plainly.
-      // Dev instruction stays in the console, not in front of visitors.
-      console.warn("[IRES] Contact form has no destination. Set CONTACT_EMAIL in script.js.");
-      status.textContent = "The enquiry form is not accepting messages yet. Please try again shortly.";
+    submitButton.disabled = true;
+    status.textContent = "Sending your note…";
+
+    try {
+      const response = await fetch(ENQUIRY_API, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) {
+        status.textContent = result.error || "We could not save that note. Please WhatsApp +233 20 966 9000.";
+        status.classList.add("is-error");
+        return;
+      }
+      form.reset();
+      document.getElementById("f-country").value = "GH";
+      document.getElementById("f-prefer").value = "whatsapp";
+      status.classList.remove("is-error");
+      status.textContent = `Thanks, ${payload.name}. We have your note and will be in touch within one business day. You can also reach us on WhatsApp at +233 20 966 9000.`;
+    } catch {
+      status.textContent = "We could not save that note. Please WhatsApp +233 20 966 9000.";
       status.classList.add("is-error");
-      return;
+    } finally {
+      submitButton.disabled = false;
     }
-
-    const subject = encodeURIComponent(`Project enquiry — ${data.get("project-type")}`);
-    const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-
-    status.textContent = `Thanks, ${name}. Your mail app is opening with the note ready to send.`;
   });
 }

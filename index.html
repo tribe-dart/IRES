@@ -20,7 +20,7 @@
     <link rel="icon" href="assets/logo/Ires%20icon.svg" type="image/svg+xml" />
     <link rel="preload" href="assets/fonts/fraunces-300-900.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=2.1" />
+    <link rel="stylesheet" href="styles.css?v=2.2" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -846,10 +846,10 @@
               <div class="field">
                 <label for="f-type">Project type</label>
                 <select id="f-type" name="project-type">
-                  <option>Residential (private home or villa)</option>
-                  <option>Commercial or institutional (school, apartments, hospitality, retreat, office)</option>
-                  <option>Development (gated community)</option>
-                  <option>Not sure yet</option>
+                  <option value="home">Residential (private home or villa)</option>
+                  <option value="commercial">Commercial or institutional (school, apartments, hospitality, retreat, office)</option>
+                  <option value="development">Development (gated community)</option>
+                  <option value="not_sure">Not sure yet</option>
                 </select>
               </div>
               <div class="field">
@@ -862,6 +862,51 @@
               <label for="f-message">Tell us about your project</label>
               <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your land, your family and your dream..." required></textarea>
               <p class="field-error" data-error-for="f-message"></p>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="f-country">Country you live in</label>
+                <select id="f-country" name="country">
+                  <option value="GH" selected>Ghana</option>
+                  <option value="NG">Nigeria</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="DE">Germany</option>
+                  <option value="NL">Netherlands</option>
+                  <option value="FR">France</option>
+                  <option value="IT">Italy</option>
+                  <option value="AE">United Arab Emirates</option>
+                  <option value="ZA">South Africa</option>
+                  <option value="KE">Kenya</option>
+                  <option value="CN">China</option>
+                  <option value="IN">India</option>
+                </select>
+                <p class="field-error" data-error-for="f-country"></p>
+              </div>
+              <div class="field">
+                <label for="f-prefer">How should we reply?</label>
+                <select id="f-prefer" name="preferred-contact">
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="call">Phone call</option>
+                  <option value="email">Email</option>
+                </select>
+                <p class="field-error" data-error-for="f-prefer"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="consent" for="f-consent">
+                <input id="f-consent" type="checkbox" name="consent" value="yes" />
+                <span>I agree that IRES may store this enquiry to reply to me, as described in the <a href="privacy.html">privacy policy</a>.</span>
+              </label>
+              <p class="field-error" data-error-for="f-consent"></p>
+            </div>
+
+            <div class="hp-field" aria-hidden="true">
+              <label for="f-company">Company website</label>
+              <input id="f-company" type="text" name="company_website" tabindex="-1" autocomplete="off" />
             </div>
 
             <button type="submit">Tell us about your project</button>
@@ -884,11 +929,12 @@
           <a href="#finance">Finance</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
+          <a href="privacy.html">Privacy</a>
         </nav>
       </div>
       <p class="footer-line">Innovative Rammed Earth Solutions. Earth becomes home.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=3"></script>
   </body>
 </html>
