@@ -153,7 +153,7 @@ async function saveEnquiry(lead) {
     crmContactId: existing?.crmContactId || "",
     crmSyncStatus: "pending",
     crmSyncAttempts: existing?.crmSyncAttempts || 0,
-    emailStatus: "waiting_for_cloudflare",
+    emailStatus: "not_configured",
     createdAt: existing?.createdAt || now,
     updatedAt: now,
   });
@@ -260,22 +260,21 @@ function salesNotes(enquiry) {
 }
 
 async function sendMail(enquiry) {
-  const token = process.env.CLOUDFLARE_API_TOKEN || "";
-  const account = process.env.CLOUDFLARE_ACCOUNT_ID || "";
-  if (!token || !account) return "waiting_for_cloudflare";
+  const token = process.env.RESEND_API_KEY || "";
+  if (!token) return "not_configured";
 
   const from = process.env.MAIL_FROM || "IRES <contact@iresglobal.com>";
   const owner = process.env.NOTIFY_EMAIL || "contact@iresglobal.com";
   try {
-    await cloudflareSend(account, token, {
+    await resendSend(token, {
       from,
       to: owner,
-      replyTo: enquiry.email || undefined,
+      reply_to: enquiry.email || undefined,
       subject: `New IRES enquiry — ${TYPE_LABEL[enquiry.enquiryType] || "Website"}`,
       text: salesNotes(enquiry),
     });
     if (enquiry.email) {
-      await cloudflareSend(account, token, {
+      await resendSend(token, {
         from,
         to: enquiry.email,
         subject: "We have your note — IRES",
@@ -298,8 +297,8 @@ async function sendMail(enquiry) {
   }
 }
 
-async function cloudflareSend(account, token, message) {
-  const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${account}/email/sending/send`, {
+async function resendSend(token, message) {
+  const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       authorization: `Bearer ${token}`,
@@ -307,7 +306,10 @@ async function cloudflareSend(account, token, message) {
     },
     body: JSON.stringify(message),
   });
-  if (!response.ok) throw new Error("mail-rejected");
+  if (!response.ok) {
+    console.error("mail", response.status);
+    throw new Error("mail-rejected");
+  }
 }
 
 async function enqueue(id) {

@@ -21,6 +21,12 @@ provider "aws" {
   profile = "william_tribedart"
 }
 
+variable "resend_api_key" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
 data "archive_file" "enquiry" {
   type        = "zip"
   source_file = "${path.module}/../../api/enquiry/index.mjs"
@@ -187,11 +193,10 @@ resource "aws_lambda_function" "enquiry" {
       ALERT_TOPIC_ARN       = aws_sns_topic.failures.arn
       RATE_SALT             = random_password.rate_salt.result
       PRIVACY_VERSION       = "2026-10-26"
-      MAIL_FROM             = "IRES <contact@iresglobal.com>"
-      NOTIFY_EMAIL          = "contact@iresglobal.com"
-      CLOUDFLARE_ACCOUNT_ID = ""
-      CLOUDFLARE_API_TOKEN  = ""
-      TURNSTILE_SECRET      = ""
+      MAIL_FROM        = "IRES <contact@iresglobal.com>"
+      NOTIFY_EMAIL     = "contact@iresglobal.com"
+      RESEND_API_KEY   = var.resend_api_key
+      TURNSTILE_SECRET = ""
     }
   }
 }

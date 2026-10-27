@@ -2,16 +2,16 @@
 
 ## Status
 
-The enquiry path is live in AWS account `622211271637`, region `eu-west-1`, profile `william_tribedart`. The contact form saves a lead and creates a CRM contact at 15% (Inquiry). Email is waiting on Cloudflare.
+The enquiry path is live in AWS account `622211271637`, region `eu-west-1`, profile `william_tribedart`. The contact form saves a lead and creates a CRM contact at 15% (Inquiry). Mail is sent with Resend from `contact@iresglobal.com`. The API key stays in `.env` and on the Lambda. It is not committed.
 
 - API: `POST https://2s128tbbya.execute-api.eu-west-1.amazonaws.com/enquiries`
 - Website copy: DynamoDB `ires_website_enquiries`
 - CRM copy: written straight into `ires_crm_contacts`, which is the table the dashboard already reads
-- Mail status on each row: `waiting_for_cloudflare` until the Lambda has `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`
+- Each enquiry emails the IRES team and, when the visitor gave an email address, sends them a confirmation
 
 The CRM dashboard was left open on purpose. It has no login, so requiring a secret on every CRM route would lock the sales team out. The public site does not call the CRM API. It calls the website API only.
 
-When Email Sending is onboarded, set those two Lambda environment variables. New enquiries will then email `contact@iresglobal.com` and send the visitor a confirmation. No code change is required.
+`iresglobal.com` must be a verified domain in Resend, with the DNS records Resend provides added in Cloudflare. Until that verification is in place, Resend refuses mail from `contact@iresglobal.com`.
 
 Adapted from the 21 Oct 2026 backend brief to the two applications that already exist. The brief’s job is unchanged: keep the marketing site fast, let no enquiry disappear, and hand every lead to the sales team.
 
@@ -87,7 +87,7 @@ API Gateway  -->  Lambda (ires-website-enquiry)
         |                 |
         |                 |  6. Email the owner and the visitor
         |                 v
-        |           Cloudflare Email Service
+        |           Resend
         |           from contact@iresglobal.com
         |
         If step 5 fails: leave the row as pending.
@@ -142,15 +142,13 @@ All of these use profile `william_tribedart` in `eu-west-1`. Prefer a small Terr
 | HTTP API | `ires-website-api` | `POST /enquiries` only |
 | SQS queue | `ires-enquiry-crm-retry` | CRM retries |
 | SNS topic | `ires-enquiry-failures` | Developer alert after 3 failed CRM syncs |
-| Cloudflare Email Service | `iresglobal.com` onboarded for Email Sending | Owner alert and visitor auto-reply. Not Amazon SES. |
-| Secrets Manager | `ires/website/prod` | CRM shared secret, Turnstile secret, Cloudflare API token |
+| Resend | verified domain `iresglobal.com` | Owner alert and visitor auto-reply. The API key lives in `.env` and on the Lambda. |
+| Secrets Manager | `ires/website/prod` | CRM shared secret and Turnstile secret, when those are added |
 | Cloudflare Turnstile | widget on the contact form | Bot check with no puzzle |
 
-Mail goes out through Cloudflare’s Email Sending REST API, from the enquiry Lambda. The call is `POST /accounts/{account_id}/email/sending/send` with a token that has Email Sending edit permission. The token stays in Secrets Manager.
+Mail goes out through Resend, from the enquiry Lambda. The call is `POST https://api.resend.com/emails`. The API key is a send-only key. It stays in `.env` locally and in the Lambda environment. It is not stored in git.
 
-`iresglobal.com` is already on Cloudflare DNS, which this service requires. Onboarding the domain adds the SPF, DKIM, and DMARC records, plus bounce handling on `cf-bounce`. Do not send visitor mail until those records are in place.
-
-Email Sending is in public beta. Sending to any visitor address needs the paid Email Sending entitlement. Sending only to addresses you have verified in the Cloudflare account is more limited and is not enough for the auto-reply.
+`iresglobal.com` must be verified in Resend. Add the SPF and DKIM records Resend shows to the Cloudflare DNS zone. Until that verification succeeds, Resend will not deliver from `contact@iresglobal.com`.
 
 The CRM contact write should set `source` to `website`, `stage` to `15%`, and `nextSteps` to “Read the enquiry and reply within one business day.” Extra brief fields that the CRM contact type does not have yet go in `notes` as labelled lines, so sales can read them without a schema change on day one. Add real fields on the CRM contact when the same data needs to be filtered.
 
@@ -160,7 +158,7 @@ Ghana’s Data Protection Act, 2012 (Act 843) applies. UK or EU visitors can als
 
 - Privacy policy and terms on the site. The consent box links to the policy and starts unticked.
 - Collect only the fields in the table above. Budget stays optional.
-- Say in the policy that enquiries are stored on AWS in Ireland and are shared with the IRES CRM and with Cloudflare, which sends the email.
+- Say in the policy that enquiries are stored on AWS in Ireland and are shared with the IRES CRM and with Resend, which sends the email.
 - Suggested retention, unless IRES chooses another period: delete or anonymise leads with no contact for 24 months.
 - HTTPS only. The Cloudflare zone should send HSTS.
 - No enquiry contents in analytics, in the page URL, or in Lambda log lines.
@@ -171,10 +169,10 @@ Ghana’s Data Protection Act, 2012 (Act 843) applies. UK or EU visitors can als
 ## Build order
 
 1. **Lock the CRM API.** Shared secret, tighter CORS, and a closed-lost stage. Deploy through the CRM repo’s existing GitHub Action.
-2. **Create the website table, API, Lambda, and queue** in `eu-west-1` with `william_tribedart`. Onboard `iresglobal.com` for Cloudflare Email Sending and store the API token in Secrets Manager.
+2. **Create the website table, API, Lambda, and queue** in `eu-west-1` with `william_tribedart`. Verify `iresglobal.com` in Resend and keep the API key out of git.
 3. **Point the contact form at `POST /enquiries`.** Remove the “open the visitor’s mail app” behaviour. Show a clear success or error on the page.
 4. **Turn on Turnstile, the honeypot, and the rate limit.** Prove a sixth submission from the same IP is rejected, and that a failed CRM call still leaves a row in `ires_website_enquiries`.
-5. **Send the two emails** from `contact@iresglobal.com` through Cloudflare Email Service after SPF, DKIM, and DMARC pass. Staging sends only to the team.
+5. **Send the two emails** from `contact@iresglobal.com` through Resend after the domain’s SPF and DKIM records pass. Staging sends only to the team.
 6. **Publish the privacy policy** and the unticked consent box. Submit the sitemap in Search Console. Add the Organization and `HomeAndConstructionBusiness` structured data with service area Ghana.
 7. **Train one IRES editor** with a one-page note: how a lead appears in the CRM, and how to reply.
 

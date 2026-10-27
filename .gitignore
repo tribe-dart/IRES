@@ -1,4 +1,5 @@
 tmp/
+.env
 infra/enquiry/.terraform/
 infra/enquiry/*.tfstate
 infra/enquiry/*.tfstate.*
