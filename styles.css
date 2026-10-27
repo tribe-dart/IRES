@@ -1327,6 +1327,26 @@ textarea:focus {
   list-style: disc;
 }
 
+.text-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--earth-deep);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.legal .contact-form {
+  margin-top: 1.5rem;
+}
+
+.legal .button {
+  margin-right: 0.75rem;
+}
+
 .field-error {
   min-height: 0;
   color: #a3361f;
