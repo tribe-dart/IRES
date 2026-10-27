@@ -1327,7 +1327,10 @@ textarea:focus {
   list-style: disc;
 }
 
-.text-button {
+.text-button,
+.contact-form .text-button {
+  display: inline;
+  min-height: 0;
   padding: 0;
   border: 0;
   background: none;
@@ -1337,6 +1340,13 @@ textarea:focus {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 0.18em;
+}
+
+.contact-form .text-button:hover {
+  background: none;
+  border-color: transparent;
+  color: var(--clay-hot);
+  transform: none;
 }
 
 .legal .contact-form {
