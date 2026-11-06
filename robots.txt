@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /thank-you.html
+Disallow: /account.html
+Disallow: /confirm.html
+
+Sitemap: https://iresglobal.com/sitemap.xml
+

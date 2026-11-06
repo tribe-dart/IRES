@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GH">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1a1410" />
     <title>Page Not Found — IRES</title>
-    <meta name="description" content="Innovative Rammed Earth Solutions" />
+    <meta name="description" content="The page you are looking for does not exist." />
     <link rel="icon" href="assets/logo/Ires%20icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=2.4" />
     <style>
       .error-hero {
-        min-height: 80vh;
+        min-height: 75vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -19,66 +19,74 @@
         padding: 4rem 1.5rem;
       }
       .error-code {
-        font-family: var(--font-display, 'Fraunces', serif);
-        font-size: clamp(4rem, 10vw, 8rem);
-        color: var(--color-earth, #a96e49);
+        font-family: var(--font-display, "Fraunces", serif);
+        font-size: clamp(4rem, 10vw, 7rem);
+        color: var(--clay-hot, #c2703c);
         margin: 0;
         line-height: 1;
       }
       .error-title {
-        font-family: var(--font-display, 'Fraunces', serif);
-        font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin: 1rem 0 1.5rem;
+        font-family: var(--font-display, "Fraunces", serif);
+        font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+        margin: 1rem 0 1.25rem;
+        color: var(--earth-deep, #433022);
       }
       .error-text {
         max-width: 480px;
-        color: var(--color-muted, #7c7267);
+        color: var(--text-soft, #6b5742);
         margin-bottom: 2rem;
+        line-height: 1.6;
       }
-      .error-btn {
-        display: inline-block;
-        padding: 0.85rem 1.75rem;
-        background-color: var(--color-earth, #a96e49);
-        color: #ffffff;
-        text-decoration: none;
-        border-radius: 999px;
-        font-weight: 500;
-        transition: opacity 0.2s ease;
-      }
-      .error-btn:hover {
-        opacity: 0.9;
+      .error-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
       }
     </style>
   </head>
   <body>
-    <header class="site-header" id="site-header">
+    <header class="site-header is-stuck" id="site-header">
       <a class="brand" href="/" aria-label="IRES, home">
         <span class="brand-mark" aria-hidden="true">
-          <img src="assets/logo/Ires-icon.png" alt="" width="266" height="270" />
+          <img src="assets/logo/Ires%20icon.svg" alt="" width="36" height="36" style="width: 36px; height: 36px; max-width: 36px; max-height: 36px; object-fit: contain; display: block;" />
         </span>
         <span class="brand-word">
           <strong>IRES</strong>
           <small>Innovative Rammed Earth Solutions</small>
         </span>
       </a>
-      <a class="nav-cta" href="/">Return home</a>
+      <a class="nav-cta" href="/#start">Contact</a>
     </header>
 
     <main id="main">
       <section class="error-hero">
         <p class="error-code">404</p>
-        <h1 class="error-title">Page Not Found</h1>
+        <h1 class="error-title">Page not found</h1>
         <p class="error-text">
-          The page you are looking for doesn't exist or may have been moved.
+          The page you are looking for does not exist or has moved. You can return to our homepage or get in touch with our team directly.
         </p>
-        <a class="error-btn" href="/">Back to Homepage</a>
+        <div class="error-actions">
+          <a class="button button-solid" href="/">Back to Homepage</a>
+          <a class="button button-ghost" href="/#start">Contact Team</a>
+        </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span class="footer-bands" aria-hidden="true">
-        <img src="assets/logo/Ires-icon.png" alt="" width="266" height="270" />
-      </span>
+      <div class="footer-row">
+        <span class="footer-mark">IRES</span>
+        <nav aria-label="Footer">
+          <a href="/#why-ires">Why IRES?</a>
+          <a href="/#how-we-create-value">How we create value</a>
+          <a href="/#what-we-build">What we build</a>
+          <a href="/#ways-to-own">Ways to own</a>
+          <a href="/#about-ires">About</a>
+          <a href="/#start">Contact</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="cookie-policy.html">Cookie policy</a>
+        </nav>
+      </div>
       <p class="footer-line">Innovative Rammed Earth Solutions. Earth becomes home.</p>
     </footer>
   </body>

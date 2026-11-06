@@ -192,7 +192,7 @@ resource "aws_lambda_function" "enquiry" {
       RETRY_QUEUE_URL       = aws_sqs_queue.retry.url
       ALERT_TOPIC_ARN       = aws_sns_topic.failures.arn
       RATE_SALT             = random_password.rate_salt.result
-      PRIVACY_VERSION       = "2026-10-26"
+      PRIVACY_VERSION       = "2026-11-v1"
       MAIL_FROM        = "IRES <contact@iresglobal.com>"
       NOTIFY_EMAIL     = "contact@iresglobal.com"
       RESEND_API_KEY   = var.resend_api_key

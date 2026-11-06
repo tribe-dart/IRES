@@ -1397,6 +1397,38 @@ textarea:focus {
   color: #a3361f;
 }
 
+.form-status:focus {
+  outline: 2px solid var(--clay-hot);
+  outline-offset: 4px;
+}
+
+.form-status-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.6rem 1.1rem;
+  background: #25d366;
+  color: #fff;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 200ms ease;
+}
+
+.form-status-whatsapp:hover {
+  background: #1eb956;
+}
+
+.anchor-alias {
+  display: block;
+  position: relative;
+  top: -90px;
+  visibility: hidden;
+  height: 0;
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
   padding: clamp(2.2rem, 5vw, 3.4rem) var(--shell) clamp(1.6rem, 3vw, 2.4rem);

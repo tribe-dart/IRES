@@ -1,11 +1,53 @@
 /* ==========================================================================
-   IRES — interactions
+   IRES — interactions & analytics
    Everything degrades to plain, readable HTML with JS disabled.
    ========================================================================== */
 
-/* Enquiry API. Mail is sent by the API once Cloudflare Email Sending is configured. */
+/* Enquiry API. Mail is sent by the API via Resend. */
 const ENQUIRY_API = "https://2s128tbbya.execute-api.eu-west-1.amazonaws.com/enquiries";
-const PRIVACY_VERSION = "2026-10-26";
+const PRIVACY_VERSION = "2026-11-v1";
+
+/* ---------- Analytics Helper (Cookieless) ---------- */
+function trackEvent(name, props = {}) {
+  try {
+    if (typeof window.plausible === "function") {
+      window.plausible(name, { props });
+    } else if (Array.isArray(window.dataLayer)) {
+      window.dataLayer.push({ event: name, ...props });
+    }
+    document.dispatchEvent(new CustomEvent("ires:analytics", { detail: { name, props } }));
+  } catch {
+    // Analytics must never throw or break user actions
+  }
+}
+
+function getEventLocation(el) {
+  if (el.closest(".site-header")) return "header";
+  if (el.closest(".hero")) return "hero";
+  if (el.closest(".contact") || el.closest("#start")) return "start-section";
+  if (el.closest(".site-footer")) return "footer";
+  if (el.closest(".legal")) return "contact-page";
+  return "panel";
+}
+
+/* ---------- Global Link & Click Tracking ---------- */
+document.addEventListener("click", (event) => {
+  const target = event.target.closest("a, button");
+  if (!target) return;
+
+  const href = target.getAttribute("href") || "";
+  const loc = target.dataset.location || getEventLocation(target);
+
+  if (href.includes("wa.me") || href.includes("whatsapp")) {
+    trackEvent("whatsapp_click", { location: loc });
+  } else if (href.startsWith("tel:")) {
+    trackEvent("phone_click", { location: loc });
+  } else if (target.dataset.analytics === "start_build_click" || href === "#start") {
+    trackEvent("start_build_click", { location: loc });
+  } else if (target.dataset.analytics === "request_call_click") {
+    trackEvent("request_call_click", { location: loc });
+  }
+});
 
 /* ---------- Reveal on scroll ---------- */
 const revealItems = Array.from(document.querySelectorAll(".reveal"));
@@ -16,6 +58,13 @@ if ("IntersectionObserver" in window && revealItems.length) {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("is-visible");
+
+        // Fire reveal_open event for sections
+        const sectionSlug = entry.target.dataset.section || entry.target.id;
+        if (sectionSlug) {
+          trackEvent("reveal_open", { section: sectionSlug });
+        }
+
         observer.unobserve(entry.target);
       });
     },
@@ -31,6 +80,32 @@ if ("IntersectionObserver" in window && revealItems.length) {
   revealItems.forEach((item) => item.classList.add("is-visible"));
 }
 
+/* ---------- Start section / Form view tracking ---------- */
+const startSection = document.getElementById("start");
+if (startSection && "IntersectionObserver" in window) {
+  let hasScrolledStart = false;
+  let hasOpenedForm = false;
+  const startObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!hasScrolledStart) {
+            hasScrolledStart = true;
+            trackEvent("scroll_start_section", {});
+          }
+          if (!hasOpenedForm) {
+            hasOpenedForm = true;
+            trackEvent("form_open", { page: window.location.pathname || "/" });
+          }
+          startObserver.disconnect();
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+  startObserver.observe(startSection);
+}
+
 /* ---------- Header state + strata progress bar ---------- */
 const header = document.getElementById("site-header");
 const progress = document.querySelector(".scroll-progress i");
@@ -39,7 +114,7 @@ let ticking = false;
 
 const updateHeader = () => {
   const y = window.scrollY || window.pageYOffset;
-  header.classList.toggle("is-stuck", y > 90);
+  if (header) header.classList.toggle("is-stuck", y > 90);
 
   if (progress) {
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -70,7 +145,8 @@ if (navToggle && siteNav && header) {
   const setMenuOpen = (open) => {
     header.classList.toggle("is-open", open);
     navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    navToggle.querySelector(".nav-toggle-label").textContent = open ? "Close menu" : "Menu";
+    const label = navToggle.querySelector(".nav-toggle-label");
+    if (label) label.textContent = open ? "Close menu" : "Menu";
     if (!open && siteNav.contains(document.activeElement)) navToggle.focus();
   };
 
@@ -95,88 +171,127 @@ if (navToggle && siteNav && header) {
   });
 }
 
+/* ---------- Anchor landing handler ---------- */
+function handleHashScroll() {
+  const h = window.location.hash;
+  if (h === "#start" || h === "#contact") {
+    const startEl = document.getElementById("start");
+    if (startEl) {
+      startEl.scrollIntoView({ behavior: "smooth" });
+      const nameField = document.getElementById("f-name");
+      if (nameField) nameField.focus();
+    }
+  }
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", handleHashScroll);
+} else {
+  handleHashScroll();
+}
+
 /* ---------- Contact form ---------- */
 const form = document.querySelector(".contact-form");
 
 if (form) {
   const status = form.querySelector(".form-status");
   const submitButton = form.querySelector("button[type='submit']");
-  const requiredFields = ["f-name", "f-site", "f-message"].map((id) => document.getElementById(id));
 
-  const setError = (input, message) => {
-    const holder = input.closest(".field");
-    const slot = holder ? holder.querySelector(".field-error") : null;
-    holder?.classList.toggle("has-error", Boolean(message));
-    input.setAttribute("aria-invalid", message ? "true" : "false");
-    if (slot) slot.textContent = message || "";
+  const clearErrors = () => {
+    form.querySelectorAll(".field").forEach((field) => field.classList.remove("has-error"));
+    form.querySelectorAll(".field-error").forEach((slot) => {
+      slot.textContent = "";
+    });
+    form.querySelectorAll("input, select, textarea").forEach((input) => {
+      input.removeAttribute("aria-invalid");
+    });
   };
 
-  const validate = () => {
-    let firstBad = null;
-    const email = document.getElementById("f-email");
-    const phone = document.getElementById("f-phone");
-    const consent = document.getElementById("f-consent");
-
-    requiredFields.forEach((input) => {
-      const message = input.value.trim() ? "" : "This field is needed.";
-      setError(input, message);
-      if (message && !firstBad) firstBad = input;
-    });
-
-    const emailValue = email.value.trim();
-    let emailMessage = "";
-    if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailValue)) {
-      emailMessage = "Enter an email address we can reply to.";
-    } else if (!emailValue && !phone.value.trim()) {
-      emailMessage = "Add an email address or a phone number.";
+  const setFieldError = (fieldName, message) => {
+    const slot = form.querySelector(`[data-error-for="${fieldName}"]`);
+    if (slot) slot.textContent = message;
+    const input = form.elements[fieldName];
+    if (input) {
+      const holder = input.closest(".field");
+      if (holder) holder.classList.add("has-error");
+      input.setAttribute("aria-invalid", "true");
     }
-    setError(email, emailMessage);
-    if (emailMessage && !firstBad) firstBad = email;
-
-    const consentMessage = consent.checked ? "" : "Please agree to the privacy policy.";
-    setError(consent, consentMessage);
-    if (consentMessage && !firstBad) firstBad = consent;
-
-    return firstBad;
   };
 
-  [...requiredFields, document.getElementById("f-email"), document.getElementById("f-phone"), document.getElementById("f-consent")].forEach((input) => {
-    input.addEventListener("input", () => {
-      if (input.closest(".field")?.classList.contains("has-error")) setError(input, "");
-    });
+  const validateClient = () => {
+    clearErrors();
+    const errors = [];
+
+    const name = String(form.elements.name?.value || "").trim();
+    if (!name || name.length < 2) {
+      errors.push({ field: "name", message: "Name is required (2 to 100 characters)." });
+    }
+
+    const phone = String(form.elements.phone?.value || "").trim();
+    if (!phone || phone.replace(/\D/g, "").length < 7) {
+      errors.push({ field: "phone", message: "Please enter a valid phone number." });
+    }
+
+    const plan = form.elements.plan?.value;
+    if (!plan) {
+      errors.push({ field: "plan", message: "Please select an enquiry type." });
+    }
+
+    const consent = form.elements.consent?.checked;
+    if (!consent) {
+      errors.push({ field: "consent", message: "Please agree that IRES may contact you about your enquiry." });
+    }
+
+    errors.forEach((err) => setFieldError(err.field, err.message));
+    return errors;
+  };
+
+  // Clear error on input
+  form.addEventListener("input", (e) => {
+    const input = e.target;
+    const name = input.name;
+    if (!name) return;
+    const holder = input.closest(".field");
+    if (holder?.classList.contains("has-error")) {
+      holder.classList.remove("has-error");
+      input.removeAttribute("aria-invalid");
+      const slot = form.querySelector(`[data-error-for="${name}"]`);
+      if (slot) slot.textContent = "";
+    }
   });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    status.classList.remove("is-error");
+    status.className = "form-status";
+    status.innerHTML = "";
 
-    const firstBad = validate();
-    if (firstBad) {
-      status.textContent = "Check the highlighted fields and try again.";
+    const clientErrors = validateClient();
+    if (clientErrors.length > 0) {
+      status.textContent = "Please check the highlighted fields.";
       status.classList.add("is-error");
-      firstBad.focus();
+      const firstInput = form.elements[clientErrors[0].field];
+      if (firstInput) firstInput.focus();
       return;
     }
 
     const data = new FormData(form);
     const params = new URLSearchParams(window.location.search);
+
     const payload = {
       name: String(data.get("name") || "").trim(),
-      email: String(data.get("email") || "").trim(),
+      country: String(data.get("country") || "GH").trim(),
       phone: String(data.get("phone") || "").trim(),
-      enquiryType: String(data.get("project-type") || ""),
-      location: String(data.get("site") || "").trim(),
+      plan: String(data.get("plan") || "").trim(),
+      location: String(data.get("location") || "").trim(),
       message: String(data.get("message") || "").trim(),
-      country: String(data.get("country") || ""),
-      preferredContact: String(data.get("preferred-contact") || ""),
-      consent: data.get("consent") === "yes",
-      privacyPolicyVersion: PRIVACY_VERSION,
-      company_website: String(data.get("company_website") || ""),
-      sourcePage: window.location.href.split("#")[0],
-      referrer: document.referrer || "",
-      utmSource: params.get("utm_source") || "",
-      utmMedium: params.get("utm_medium") || "",
-      utmCampaign: params.get("utm_campaign") || "",
+      consent: data.get("consent") === "yes" || data.get("consent") === "true",
+      consentVersion: PRIVACY_VERSION,
+      website: String(data.get("website") || "").trim(),
+      sourcePage: window.location.pathname || "/",
+      utm: {
+        utm_source: params.get("utm_source") || "",
+        utm_medium: params.get("utm_medium") || "",
+        utm_campaign: params.get("utm_campaign") || "",
+      },
     };
 
     submitButton.disabled = true;
@@ -188,22 +303,67 @@ if (form) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       const result = await response.json().catch(() => ({}));
-      if (!response.ok || !result.ok) {
-        status.textContent = result.error || "We could not save that note. Please WhatsApp +233 20 966 9000.";
+
+      if (response.status === 201 || (response.ok && result.id)) {
+        form.reset();
+        const countrySelect = document.getElementById("f-country");
+        if (countrySelect) countrySelect.value = "GH";
+
+        status.classList.remove("is-error");
+        status.innerHTML = `
+          <div class="thank-you-box" tabindex="-1">
+            <p><strong>Thanks, ${escapeHtml(payload.name)}.</strong> We have your note and will be in touch within one business day.</p>
+            <p>You can also reach us on WhatsApp: <a href="https://wa.me/233209669000?text=Hello%20IRES%2C%20I%20would%20like%20to%20talk%20about%20building%20a%20home." target="_blank" rel="noopener">+233 20 966 9000</a></p>
+          </div>
+        `;
+        const thankBox = status.querySelector(".thank-you-box");
+        if (thankBox) thankBox.focus();
+
+        trackEvent("enquiry_sent", { plan: payload.plan, page: payload.sourcePage });
+      } else if (response.status === 400 && Array.isArray(result.errors)) {
+        clearErrors();
+        result.errors.forEach((err) => setFieldError(err.field, err.message));
+        status.textContent = "Please correct the errors above and try again.";
         status.classList.add("is-error");
-        return;
+        const firstBad = form.elements[result.errors[0]?.field];
+        if (firstBad) firstBad.focus();
+        trackEvent("enquiry_error", { status: 400 });
+      } else if (response.status === 429) {
+        status.classList.add("is-error");
+        status.innerHTML = `
+          <p>${escapeHtml(result.message || "Too many attempts, please try again later or message us on WhatsApp.")}</p>
+          <a class="form-status-whatsapp" href="https://wa.me/233209669000?text=Hello%20IRES%2C%20I%20would%20like%20to%20talk%20about%20building%20a%20home." target="_blank" rel="noopener">Chat on WhatsApp</a>
+        `;
+        trackEvent("enquiry_error", { status: 429 });
+      } else {
+        // Fallback state (500 or unknown error)
+        status.classList.add("is-error");
+        status.innerHTML = `
+          <p>We could not save that note. Please WhatsApp us directly at +233 20 966 9000.</p>
+          <a class="form-status-whatsapp" href="https://wa.me/233209669000?text=Hello%20IRES%2C%20I%20would%20like%20to%20talk%20about%20building%20a%20home." target="_blank" rel="noopener">Chat on WhatsApp</a>
+        `;
+        trackEvent("enquiry_error", { status: response.status || 500 });
       }
-      form.reset();
-      document.getElementById("f-country").value = "GH";
-      document.getElementById("f-prefer").value = "whatsapp";
-      status.classList.remove("is-error");
-      status.textContent = `Thanks, ${payload.name}. We have your note and will be in touch within one business day. You can also reach us on WhatsApp at +233 20 966 9000.`;
     } catch {
-      status.textContent = "We could not save that note. Please WhatsApp +233 20 966 9000.";
       status.classList.add("is-error");
+      status.innerHTML = `
+        <p>Network error. We could not save your note right now. Please message us on WhatsApp:</p>
+        <a class="form-status-whatsapp" href="https://wa.me/233209669000?text=Hello%20IRES%2C%20I%20would%20like%20to%20talk%20about%20building%20a%20home." target="_blank" rel="noopener">Chat on WhatsApp</a>
+      `;
+      trackEvent("enquiry_error", { status: 500 });
     } finally {
       submitButton.disabled = false;
     }
   });
+}
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }

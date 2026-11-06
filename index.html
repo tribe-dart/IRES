@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GH">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,18 +9,67 @@
       name="description"
       content="Rammed earth homes and developments in Ghana, complete with solar power, water, sanitation, design and finance. One team. Earth becomes home."
     />
+    <link rel="canonical" href="https://iresglobal.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="IRES" />
+    <meta property="og:title" content="IRES — Earth becomes home." />
     <meta
       property="og:description"
       content="Naturally cool, solar-powered rammed earth homes, schools and communities in Ghana and across West Africa."
     />
-    <meta property="og:image" content="assets/logo/Ires-logo.png" />
+    <meta property="og:url" content="https://iresglobal.com/" />
+    <meta property="og:image" content="https://iresglobal.com/assets/logo/Ires-logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IRES — Earth becomes home." />
+    <meta name="twitter:description" content="Naturally cool, solar-powered rammed earth homes, schools and communities in Ghana and across West Africa." />
+    <meta name="twitter:image" content="https://iresglobal.com/assets/logo/Ires-logo.png" />
     <link rel="icon" href="assets/logo/Ires%20icon.svg" type="image/svg+xml" />
     <link rel="preload" href="assets/fonts/fraunces-300-900.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=2.3" />
+    <link rel="stylesheet" href="styles.css?v=2.4" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HomeAndConstructionBusiness",
+        "name": "Innovative Rammed Earth Solutions",
+        "alternateName": "IRES",
+        "url": "https://iresglobal.com",
+        "logo": "https://iresglobal.com/assets/logo/Ires-logo.png",
+        "image": "https://iresglobal.com/assets/logo/Ires-logo.png",
+        "description": "Rammed earth homes and developments in Ghana, complete with solar power, water, sanitation, design and finance.",
+        "telephone": "+233209669000",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Accra",
+          "addressCountry": "GH"
+        },
+        "areaServed": "GH",
+        "sameAs": [
+          "https://wa.me/233209669000"
+        ]
+      }
+    </script>
+    <script>
+      (function() {
+        var map = {
+          '#why-rammed-earth': '#why-ires',
+          '#solutions': '#how-we-create-value',
+          '#who-we-build-for': '#what-we-build',
+          '#finance': '#ways-to-own',
+          '#about': '#about-ires',
+          '#contact': '#start',
+          '#top': ''
+        };
+        var h = window.location.hash;
+        if (h && Object.prototype.hasOwnProperty.call(map, h)) {
+          var target = map[h];
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search + target);
+          } else {
+            window.location.hash = target;
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -37,15 +86,15 @@
       </a>
 
       <nav class="site-nav" id="site-nav" aria-label="Primary">
-        <a href="#why-rammed-earth">Why rammed earth</a>
-        <a href="#solutions">Solutions</a>
-        <a href="#who-we-build-for">Who we build for</a>
-        <a href="#finance">Finance</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <a href="#why-ires">Why IRES?</a>
+        <a href="#how-we-create-value">How we create value</a>
+        <a href="#what-we-build">What we build</a>
+        <a href="#ways-to-own">Ways to own</a>
+        <a href="#about-ires">About</a>
+        <a href="#start">Contact</a>
       </nav>
 
-      <a class="nav-cta" href="#contact">Let’s build your home</a>
+      <a class="nav-cta" href="#start" data-analytics="start_build_click" data-location="header">Let’s build your home</a>
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
         <span class="nav-toggle-label">Menu</span>
@@ -85,8 +134,8 @@
             Imagine a home that stays cool without blasting the AC, keeps its lights on through every outage, draws its own water, and grows more beautiful every year. That’s an IRES home: built from rammed earth, local soil compacted layer by layer into solid, beautiful walls.
           </p>
           <div class="hero-actions">
-            <a class="button button-solid" href="#contact">Let’s build your home</a>
-            <a class="button button-ghost" href="#solutions">See what we build</a>
+            <a class="button button-solid" href="#start" data-analytics="start_build_click" data-location="hero">Let’s build your home</a>
+            <a class="button button-ghost" href="#what-we-build" data-analytics="request_call_click" data-location="hero">See what we build</a>
           </div>
         </div>
 
@@ -174,7 +223,9 @@
       </section>
 
       <!-- ============ 3. WHO WE ARE ============ -->
-      <section class="foundation section" id="about" aria-labelledby="foundation-title">
+      <section class="foundation section" id="about-ires" data-section="about-ires" aria-labelledby="foundation-title">
+        <span id="about" class="anchor-alias"></span>
+        <span id="our-philosophy" class="anchor-alias"></span>
         <div class="foundation-copy reveal">
           <p class="eyebrow">Who we are</p>
           <h2 id="foundation-title">Ancient Earth, Engineered for the Future.</h2>
@@ -201,7 +252,8 @@
       </section>
 
       <!-- ============ 4. WHY RAMMED EARTH ============ -->
-      <section class="material section" id="why-rammed-earth" aria-labelledby="material-title">
+      <section class="material section" id="why-ires" data-section="why-ires" aria-labelledby="material-title">
+        <span id="why-rammed-earth" class="anchor-alias"></span>
         <div class="material-backdrop" aria-hidden="true">
           <picture>
             <source srcset="assets/img/earth-texture.webp" type="image/webp" />
@@ -266,9 +318,10 @@
       </section>
 
       <!-- ============ 5. SOLUTIONS ============ -->
-      <section class="systems section" id="solutions" aria-labelledby="solutions-title">
+      <section class="systems section" id="how-we-create-value" data-section="how-we-create-value" aria-labelledby="solutions-title">
+        <span id="solutions" class="anchor-alias"></span>
         <div class="section-head reveal">
-          <p class="eyebrow">Our solutions</p>
+          <p class="eyebrow">How we create value</p>
           <h2 id="solutions-title">More than walls. Everything a home needs to live well.</h2>
           <p class="section-note">
             Choose a single service or the full package. Either way, it’s one team, one contract and one point of contact.
@@ -322,8 +375,8 @@
           <article class="solution-card system-card-sage reveal">
             <span class="card-band" aria-hidden="true"></span>
             <span class="card-index">07</span>
-            <h3>Finance</h3>
-            <p>Payment plans, developer financing (up to 15 years), construction financing, milestone billing and mortgages with banking partners.</p>
+            <h3>Ways to own</h3>
+            <p>Developer finance, interest-free payment plans, milestone billing, and mortgages with banking partners.</p>
           </article>
 
           <article class="solution-card system-card-deep reveal">
@@ -368,12 +421,12 @@
               <span class="detail-tag">03 · Water</span>
               <h4>Your own water.</h4>
               <p class="detail-lead">
-                Borehole water systems: We drill, equip and connect a borehole for your home or community, with storage and solar-powered pumping, so you’re never waiting for the mains.
+                Borehole water systems: We drill, equip and connect a borehole for your home or community, with storage and solar pumping, so you’re never waiting for the mains.
               </p>
               <div class="detail-checklist">
                 <span>Site survey and drilling</span>
-                <span>Pump, storage tank and plumbing</span>
-                <span>Powered by your solar system</span>
+                <span>Water storage tank and plumbing</span>
+                <span>Powered by your clean solar system</span>
               </div>
             </article>
 
@@ -423,10 +476,11 @@
         </div>
       </section>
 
-      <!-- ============ 6. WHO WE BUILD FOR ============ -->
-      <section class="section" id="who-we-build-for" style="background: var(--sand);" aria-labelledby="audiences-title">
+      <!-- ============ 6. WHAT WE BUILD ============ -->
+      <section class="section" id="what-we-build" data-section="what-we-build" style="background: var(--sand);" aria-labelledby="audiences-title">
+        <span id="who-we-build-for" class="anchor-alias"></span>
         <div class="section-head reveal">
-          <p class="eyebrow">Builder, developer</p>
+          <p class="eyebrow">What we build</p>
           <h2 id="audiences-title">One way of building, from one home to a whole town.</h2>
           <p class="section-note">
             Whether for an individual family or an institutional master plan, IRES delivers end-to-end design and construction with unified accountability.
@@ -460,10 +514,11 @@
         </div>
       </section>
 
-      <!-- ============ 7. FINANCE ============ -->
-      <section class="section" id="finance" style="background: var(--cream);" aria-labelledby="finance-title">
+      <!-- ============ 7. WAYS TO OWN ============ -->
+      <section class="section" id="ways-to-own" data-section="ways-to-own" style="background: var(--cream);" aria-labelledby="finance-title">
+        <span id="finance" class="anchor-alias"></span>
         <div class="section-head reveal">
-          <p class="eyebrow">Finance</p>
+          <p class="eyebrow">Ways to own</p>
           <h2 id="finance-title">Four ways to own your piece of earth.</h2>
           <p class="section-note">
             We work with you to make funding straightforward, transparent and structured around real project milestones.
@@ -479,7 +534,7 @@
 
           <article class="finance-card reveal">
             <span class="finance-badge">Interest-free</span>
-            <h3>Payment plans</h3>
+            <h3>Interest-free payment plans</h3>
             <p>Pay in instalments over a shorter term, with no interest.</p>
           </article>
 
@@ -491,7 +546,7 @@
 
           <article class="finance-card reveal">
             <span class="finance-badge">With banking partners</span>
-            <h3>Mortgage</h3>
+            <h3>Mortgage with banking partners</h3>
             <p>We streamline the process with our banking partners, so getting a mortgage is effortless.</p>
           </article>
         </div>
@@ -785,8 +840,9 @@
         </div>
       </section>
 
-      <!-- ============ 11. CONTACT ============ -->
-      <section class="contact" id="contact" aria-labelledby="contact-title">
+      <!-- ============ 11. START YOUR BUILD / CONTACT ============ -->
+      <section class="contact" id="start" data-section="start" aria-labelledby="contact-title">
+        <span id="contact" class="anchor-alias"></span>
         <div class="contact-panel">
           <div class="contact-copy reveal">
             <p class="eyebrow eyebrow-light">Begin your home</p>
@@ -802,15 +858,13 @@
 
             <div class="contact-direct">
               <div class="contact-direct-item">
-                <span class="contact-direct-label">Office</span>
-                <span class="contact-direct-value">
-                  <a href="https://maps.google.com/?q=54+5th+Circular+Road+Cantonments+Accra" rel="noopener noreferrer">54, 5th Circular Road, Cantonments, Accra</a>
-                </span>
+                <span class="contact-direct-label">Location</span>
+                <span class="contact-direct-value">Accra, Ghana</span>
               </div>
               <div class="contact-direct-item">
                 <span class="contact-direct-label">Phone / WhatsApp</span>
                 <span class="contact-direct-value">
-                  <a href="tel:+233209669000">+233 20 966 9000</a>
+                  <a href="https://wa.me/233209669000?text=Hello%20IRES%2C%20I%20would%20like%20to%20talk%20about%20building%20a%20home." data-analytics="whatsapp" data-location="contact-page">+233 20 966 9000</a>
                 </span>
               </div>
               <div class="contact-direct-item">
@@ -822,95 +876,82 @@
             </div>
           </div>
 
-          <form class="contact-form reveal" novalidate>
+          <form class="contact-form reveal" novalidate method="POST" action="https://2s128tbbya.execute-api.eu-west-1.amazonaws.com/enquiries">
             <div class="field">
               <label for="f-name">Name</label>
-              <input id="f-name" type="text" name="name" autocomplete="name" required />
-              <p class="field-error" data-error-for="f-name"></p>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label for="f-email">Email</label>
-                <input id="f-email" type="email" name="email" autocomplete="email" required />
-                <p class="field-error" data-error-for="f-email"></p>
-              </div>
-              <div class="field">
-                <label for="f-phone">Phone / WhatsApp</label>
-                <input id="f-phone" type="tel" name="phone" placeholder="+233..." />
-                <p class="field-error" data-error-for="f-phone"></p>
-              </div>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label for="f-type">Project type</label>
-                <select id="f-type" name="project-type">
-                  <option value="home">Residential (private home or villa)</option>
-                  <option value="commercial">Commercial or institutional (school, apartments, hospitality, retreat, office)</option>
-                  <option value="development">Development (gated community)</option>
-                  <option value="not_sure">Not sure yet</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="f-site">Site location</label>
-                <input id="f-site" type="text" name="site" placeholder="Town, region, or country" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-message">Tell us about your project</label>
-              <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your land, your family and your dream..." required></textarea>
-              <p class="field-error" data-error-for="f-message"></p>
+              <input id="f-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="100" placeholder="Your full name" required />
+              <p class="field-error" data-error-for="name"></p>
             </div>
 
             <div class="field-row">
               <div class="field">
                 <label for="f-country">Country you live in</label>
                 <select id="f-country" name="country">
-                  <option value="GH" selected>Ghana</option>
-                  <option value="NG">Nigeria</option>
-                  <option value="GB">United Kingdom</option>
-                  <option value="US">United States</option>
-                  <option value="CA">Canada</option>
-                  <option value="DE">Germany</option>
-                  <option value="NL">Netherlands</option>
-                  <option value="FR">France</option>
-                  <option value="IT">Italy</option>
-                  <option value="AE">United Arab Emirates</option>
-                  <option value="ZA">South Africa</option>
-                  <option value="KE">Kenya</option>
-                  <option value="CN">China</option>
-                  <option value="IN">India</option>
+                  <option value="GH" selected>Ghana (+233)</option>
+                  <option value="NG">Nigeria (+234)</option>
+                  <option value="GB">United Kingdom (+44)</option>
+                  <option value="US">United States (+1)</option>
+                  <option value="CA">Canada (+1)</option>
+                  <option value="DE">Germany (+49)</option>
+                  <option value="NL">Netherlands (+31)</option>
+                  <option value="FR">France (+33)</option>
+                  <option value="IT">Italy (+39)</option>
+                  <option value="AE">United Arab Emirates (+971)</option>
+                  <option value="ZA">South Africa (+27)</option>
+                  <option value="KE">Kenya (+254)</option>
+                  <option value="CN">China (+86)</option>
+                  <option value="IN">India (+91)</option>
                 </select>
-                <p class="field-error" data-error-for="f-country"></p>
+                <p class="field-error" data-error-for="country"></p>
               </div>
+
               <div class="field">
-                <label for="f-prefer">How should we reply?</label>
-                <select id="f-prefer" name="preferred-contact">
-                  <option value="whatsapp">WhatsApp</option>
-                  <option value="call">Phone call</option>
-                  <option value="email">Email</option>
+                <label for="f-phone">Phone / WhatsApp</label>
+                <input id="f-phone" type="tel" name="phone" placeholder="+233 20 966 9000" autocomplete="tel" required />
+                <p class="field-error" data-error-for="phone"></p>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="f-plan">Project type</label>
+                <select id="f-plan" name="plan" required>
+                  <option value="residential" selected>Residential (private home or villa)</option>
+                  <option value="commercial-institutional">Commercial or institutional (school, apartments, hospitality)</option>
+                  <option value="developments">Developments (gated community)</option>
+                  <option value="not-sure">Not sure yet</option>
                 </select>
-                <p class="field-error" data-error-for="f-prefer"></p>
+                <p class="field-error" data-error-for="plan"></p>
+              </div>
+
+              <div class="field">
+                <label for="f-location">Where will you build</label>
+                <input id="f-location" type="text" name="location" maxlength="120" placeholder="Town, region, or country" />
+                <p class="field-error" data-error-for="location"></p>
               </div>
             </div>
 
             <div class="field">
+              <label for="f-message">Tell us about your project</label>
+              <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your land, your timeline, or any questions..."></textarea>
+              <p class="field-error" data-error-for="message"></p>
+            </div>
+
+            <div class="field">
               <label class="consent" for="f-consent">
-                <input id="f-consent" type="checkbox" name="consent" value="yes" />
-                <span>I agree that IRES may store this enquiry to reply to me, as described in the <a href="privacy.html">privacy policy</a>.</span>
+                <input id="f-consent" type="checkbox" name="consent" value="yes" required />
+                <span>I agree that IRES may contact me about my enquiry. Read our <a href="privacy.html">privacy policy</a>.</span>
               </label>
-              <p class="field-error" data-error-for="f-consent"></p>
+              <p class="field-error" data-error-for="consent"></p>
             </div>
 
             <div class="hp-field" aria-hidden="true">
-              <label for="f-company">Company website</label>
-              <input id="f-company" type="text" name="company_website" tabindex="-1" autocomplete="off" />
+              <label for="f-website">Website</label>
+              <input id="f-website" type="text" name="website" tabindex="-1" autocomplete="off" />
             </div>
 
-            <button type="submit">Tell us about your project</button>
-            <p class="form-status" role="status" aria-live="polite"></p>
+            <button type="submit" data-analytics="start_build_click" data-location="start-section">Tell us about your project</button>
+            <div class="form-status" role="status" aria-live="polite"></div>
           </form>
         </div>
       </section>
@@ -923,18 +964,19 @@
       <div class="footer-row">
         <span class="footer-mark">IRES</span>
         <nav aria-label="Footer">
-          <a href="#why-rammed-earth">Why rammed earth</a>
-          <a href="#solutions">Solutions</a>
-          <a href="#who-we-build-for">Who we build for</a>
-          <a href="#finance">Finance</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#why-ires">Why IRES?</a>
+          <a href="#how-we-create-value">How we create value</a>
+          <a href="#what-we-build">What we build</a>
+          <a href="#ways-to-own">Ways to own</a>
+          <a href="#about-ires">About</a>
+          <a href="#start">Contact</a>
           <a href="privacy.html">Privacy</a>
+          <a href="cookie-policy.html">Cookie policy</a>
         </nav>
       </div>
       <p class="footer-line">Innovative Rammed Earth Solutions. Earth becomes home.</p>
     </footer>
 
-    <script src="script.js?v=3"></script>
+    <script src="script.js?v=4"></script>
   </body>
 </html>
