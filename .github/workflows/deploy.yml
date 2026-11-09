@@ -34,7 +34,18 @@ jobs:
             --exclude "tmp/*" \
             --exclude "*.md" \
             --exclude "*.html" \
+            --exclude "robots.txt" \
+            --exclude "sitemap.xml" \
             --cache-control "public, max-age=31536000, immutable"
+
+      - name: Deploy Search Crawling Files (Revalidate on Every Request)
+        run: |
+          aws s3 cp robots.txt s3://${{ secrets.S3_BUCKET_NAME || 'iresglobal.com' }}/robots.txt \
+            --content-type "text/plain; charset=utf-8" \
+            --cache-control "public, max-age=0, must-revalidate"
+          aws s3 cp sitemap.xml s3://${{ secrets.S3_BUCKET_NAME || 'iresglobal.com' }}/sitemap.xml \
+            --content-type "application/xml; charset=utf-8" \
+            --cache-control "public, max-age=0, must-revalidate"
 
       - name: Deploy HTML Files (No Cache for Instant Updates)
         run: |

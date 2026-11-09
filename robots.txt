@@ -1,8 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /thank-you.html
-Disallow: /account.html
-Disallow: /confirm.html
+# Utility pages use robots meta noindex; allow crawling so it can be read.
 
 Sitemap: https://iresglobal.com/sitemap.xml
 
