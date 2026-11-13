@@ -859,6 +859,11 @@ h3 {
   z-index: -1;
 }
 
+/* Legacy link targets must not consume a cell in the content grid. */
+.material > .anchor-alias {
+  position: absolute;
+}
+
 .material-backdrop img {
   width: 100%;
   height: 100%;
