@@ -33,7 +33,7 @@
     <link rel="icon" href="assets/logo/Ires%20icon.svg" type="image/svg+xml" />
     <link rel="preload" href="assets/fonts/fraunces-300-900.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="styles.css?v=2.4" />
+    <link rel="stylesheet" href="styles.css?v=2.5" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -98,26 +98,43 @@
         ]
       }
     </script>
-    <script>
+    <script id="legacy-navigation">
       (function() {
-        var map = {
-          '#why-rammed-earth': '#why-ires',
-          '#solutions': '#how-we-create-value',
-          '#who-we-build-for': '#what-we-build',
-          '#finance': '#ways-to-own',
-          '#about': '#about-ires',
-          '#contact': '#start',
-          '#top': ''
+        var pages = {
+          "#why-ires": "why-ires.html",
+          "#how-we-create-value": "how-we-create-value.html",
+          "#what-we-build": "what-we-build.html",
+          "#ways-to-own": "ways-to-own.html",
+          "#about-ires": "about.html",
+          "#start": "contact.html",
+          "#why-rammed-earth": "why-ires.html",
+          "#solutions": "how-we-create-value.html",
+          "#who-we-build-for": "what-we-build.html",
+          "#finance": "ways-to-own.html",
+          "#about": "about.html",
+          "#our-philosophy": "about.html",
+          "#contact": "contact.html",
+          "#heritage": "about.html#heritage",
+          "#ghana": "about.html#ghana",
+          "#work": "what-we-build.html#work",
+          "#process": "how-we-create-value.html#process",
+          "#problems": "why-ires.html#problems",
+          "#closing-summary": "why-ires.html#closing-summary",
+          "#top": ""
         };
-        var h = window.location.hash;
-        if (h && Object.prototype.hasOwnProperty.call(map, h)) {
-          var target = map[h];
-          if (window.history && window.history.replaceState) {
-            window.history.replaceState(null, '', window.location.pathname + window.location.search + target);
-          } else {
-            window.location.hash = target;
+        function redirectLegacySection() {
+          var hash = window.location.hash;
+          if (!Object.prototype.hasOwnProperty.call(pages, hash)) return;
+          if (hash === '#top') {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+            return;
           }
+          var destination = new URL(pages[hash], window.location.href);
+          destination.search = window.location.search;
+          window.location.replace(destination.href);
         }
+        redirectLegacySection();
+        window.addEventListener('hashchange', redirectLegacySection);
       })();
     </script>
   </head>
@@ -125,7 +142,7 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header" id="site-header">
-      <a class="brand" href="#top" aria-label="IRES, home">
+      <a class="brand" href="index.html" aria-label="IRES, home">
         <span class="brand-mark" aria-hidden="true">
           <img src="assets/logo/Ires%20icon.svg" alt="" width="36" height="36" style="width: 36px; height: 36px; max-width: 36px; max-height: 36px; object-fit: contain; display: block;" />
         </span>
@@ -136,15 +153,15 @@
       </a>
 
       <nav class="site-nav" id="site-nav" aria-label="Primary">
-        <a href="#why-ires">Why IRES?</a>
-        <a href="#how-we-create-value">How we create value</a>
-        <a href="#what-we-build">What we build</a>
-        <a href="#ways-to-own">Ways to own</a>
-        <a href="#about-ires">About</a>
-        <a href="#start">Contact</a>
+        <a href="why-ires.html">Why IRES?</a>
+        <a href="how-we-create-value.html">How we create value</a>
+        <a href="what-we-build.html">What we build</a>
+        <a href="ways-to-own.html">Ways to own</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
       </nav>
 
-      <a class="nav-cta" href="#start" data-analytics="start_build_click" data-location="header">Let’s build your home</a>
+      <a class="nav-cta" href="contact.html" data-analytics="start_build_click" data-location="header">Let’s build your home</a>
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
         <span class="nav-toggle-label">Menu</span>
@@ -155,9 +172,6 @@
     </header>
 
     <main id="main">
-      <span id="top"></span>
-
-      <!-- ============ 1. HERO ============ -->
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-media" aria-hidden="true">
           <picture>
@@ -184,8 +198,8 @@
             Imagine a home that stays cool without blasting the AC, keeps its lights on through every outage, draws its own water, and grows more beautiful every year. That’s an IRES home: built from rammed earth, local soil compacted layer by layer into solid, beautiful walls.
           </p>
           <div class="hero-actions">
-            <a class="button button-solid" href="#start" data-analytics="start_build_click" data-location="hero">Let’s build your home</a>
-            <a class="button button-ghost" href="#what-we-build" data-analytics="request_call_click" data-location="hero">See what we build</a>
+            <a class="button button-solid" href="contact.html" data-analytics="start_build_click" data-location="hero">Let’s build your home</a>
+            <a class="button button-ghost" href="what-we-build.html" data-analytics="request_call_click" data-location="hero">See what we build</a>
           </div>
         </div>
 
@@ -210,801 +224,6 @@
           </li>
         </ul>
       </section>
-
-      <!-- ============ 2. PROBLEMS WE SOLVE ============ -->
-      <section class="problems-section section" id="problems" aria-labelledby="problems-title">
-        <div class="section-head reveal">
-          <p class="eyebrow">Building in Ghana today</p>
-          <h2 id="problems-title">We know what keeps you up at night.</h2>
-          <p class="section-note">
-            Building in West Africa comes with clear challenges. IRES brings one accountable team and engineered solutions so you never have to navigate them alone.
-          </p>
-        </div>
-
-        <div class="problems-grid">
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Hot homes, high cooling bills</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> Thick rammed-earth walls keep interiors naturally cool.</p>
-          </article>
-
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Dumsor and noisy generators</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> Solar with battery storage, as your main power or as backup. No more fumes, noise or fuel runs.</p>
-          </article>
-
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Irregular water supply</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> Your own borehole and storage, so taps keep running.</p>
-          </article>
-
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Septic tanks that fill and smell</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> Biodigester sanitation that breaks waste down naturally.</p>
-          </article>
-
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Building from abroad</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> One accountable team, milestone payments and regular progress reports, so diaspora clients always know where their money is.</p>
-          </article>
-
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Too many contractors</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> Design, build, energy, water, interiors and landscaping, all under one contract.</p>
-          </article>
-
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Cost overruns and delays</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> Clear estimates up front and a fixed payment schedule tied to finished work.</p>
-          </article>
-
-          <article class="problem-card reveal">
-            <span class="problem-badge">The Problem</span>
-            <h3 class="problem-title">Paying for it all at once</h3>
-            <p class="problem-answer"><strong>The IRES answer:</strong> Flexible payment plans on IRES homes, plus developer finance and our banking partners.</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- ============ 3. WHO WE ARE ============ -->
-      <section class="foundation section" id="about-ires" data-section="about-ires" aria-labelledby="foundation-title">
-        <span id="about" class="anchor-alias"></span>
-        <span id="our-philosophy" class="anchor-alias"></span>
-        <div class="foundation-copy reveal">
-          <p class="eyebrow">Who we are</p>
-          <h2 id="foundation-title">Ancient Earth, Engineered for the Future.</h2>
-        </div>
-        <div class="foundation-body reveal">
-          <p class="lead">
-            Traditional earth building, brought up to date with modern engineering, testing and design.
-          </p>
-          <p class="lead" style="margin-top: 1.2rem;">
-            And we don’t stop at the walls. Solar power, borehole water, biodigester sanitation, architecture, interiors, landscaping and flexible finance all come from one accountable team. Homes, schools, apartments and whole communities, complete from day one.
-          </p>
-          <div class="values-strip">
-            <span class="values-title">Our Values</span>
-            <div class="values-items">
-              <span>Sustainability</span>
-              <span>Innovation</span>
-              <span>Completeness</span>
-              <span>Durability</span>
-              <span>Craftsmanship</span>
-              <span>Future-mindedness</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ 4. WHY RAMMED EARTH ============ -->
-      <section class="material section" id="why-ires" data-section="why-ires" aria-labelledby="material-title">
-        <span id="why-rammed-earth" class="anchor-alias"></span>
-        <div class="material-backdrop" aria-hidden="true">
-          <picture>
-            <source srcset="assets/img/earth-texture.webp" type="image/webp" />
-            <img
-              src="assets/img/earth-texture.jpg"
-              alt=""
-              width="1400" height="800" loading="lazy" decoding="async"
-            />
-          </picture>
-        </div>
-
-        <div class="material-media reveal">
-          <picture>
-            <source srcset="assets/img/arch-interior.webp" type="image/webp" />
-            <img
-              src="assets/img/arch-interior.jpg"
-              alt="Interior of an earth-walled gallery with a tall curved arch and soft daylight"
-              width="1000" height="1250" loading="lazy" decoding="async"
-            />
-          </picture>
-        </div>
-
-        <div class="material-copy reveal">
-          <p class="eyebrow eyebrow-light">Why rammed earth</p>
-          <h2 id="material-title">Cooler, stronger, kinder to the planet.</h2>
-          <p>
-            Rammed earth is made by compacting damp soil, layer by layer, inside a formwork. The natural earth strata are the finish. We test and stabilise the mix with modern structural engineering to deliver lasting performance across West Africa.
-          </p>
-        </div>
-
-        <div class="benefits-grid" style="grid-column: 1 / -1;">
-          <article class="benefit-card reveal">
-            <h3>Naturally cool</h3>
-            <p>Thick earth walls absorb the day’s heat and release it slowly, so rooms stay comfortable with less air-conditioning.</p>
-          </article>
-
-          <article class="benefit-card reveal">
-            <h3>Low carbon</h3>
-            <p>Built mostly from soil on or near the site. Nothing is fired, and only a small amount of cement is used to stabilise the mix.</p>
-          </article>
-
-          <article class="benefit-card reveal">
-            <h3>Built for generations</h3>
-            <p>Dense, solid walls that grow more beautiful with age. Some earth buildings have stood for centuries.</p>
-          </article>
-
-          <article class="benefit-card reveal">
-            <h3>Fire &amp; pest resistant</h3>
-            <p>Earth doesn’t burn, and solid walls give termites and pests nothing to eat.</p>
-          </article>
-
-          <article class="benefit-card reveal">
-            <h3>Mould resistant &amp; healthy</h3>
-            <p>Breathable earth walls balance indoor humidity, so damp and mould struggle to take hold. Their mass also blocks outside noise.</p>
-          </article>
-
-          <article class="benefit-card reveal">
-            <h3>Low maintenance</h3>
-            <p>Unlike concrete and block, there’s no endless cycle of patching cracks, re-plastering and repainting. The natural earth strata are the finish.</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- ============ 5. SOLUTIONS ============ -->
-      <section class="systems section" id="how-we-create-value" data-section="how-we-create-value" aria-labelledby="solutions-title">
-        <span id="solutions" class="anchor-alias"></span>
-        <div class="section-head reveal">
-          <p class="eyebrow">How we create value</p>
-          <h2 id="solutions-title">More than walls. Everything a home needs to live well.</h2>
-          <p class="section-note">
-            Choose a single service or the full package. Either way, it’s one team, one contract and one point of contact.
-          </p>
-        </div>
-
-        <!-- 8 Solution Cards -->
-        <div class="solutions-grid-8">
-          <article class="solution-card system-card-earth reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">01</span>
-            <h3>Construction</h3>
-            <p>Stabilised rammed-earth walls, structure and roofing, tested and engineered.</p>
-          </article>
-
-          <article class="solution-card system-card-clay reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">02</span>
-            <h3>Energy</h3>
-            <p>Solar as primary power or backup. No dumsor, no generator fumes.</p>
-          </article>
-
-          <article class="solution-card system-card-sage reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">03</span>
-            <h3>Water</h3>
-            <p>Borehole drilling, storage and pumping for steady supply.</p>
-          </article>
-
-          <article class="solution-card system-card-deep reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">04</span>
-            <h3>Sanitation</h3>
-            <p>Biodegradable biodigester septic systems.</p>
-          </article>
-
-          <article class="solution-card system-card-earth reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">05</span>
-            <h3>Design</h3>
-            <p>Architecture, engineering and master planning.</p>
-          </article>
-
-          <article class="solution-card system-card-clay reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">06</span>
-            <h3>Décor &amp; botanicals</h3>
-            <p>Interiors, finishes, furnishing and landscaping.</p>
-          </article>
-
-          <article class="solution-card system-card-sage reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">07</span>
-            <h3>Ways to own</h3>
-            <p>Developer finance, interest-free payment plans, milestone billing, and mortgages with banking partners.</p>
-          </article>
-
-          <article class="solution-card system-card-deep reveal">
-            <span class="card-band" aria-hidden="true"></span>
-            <span class="card-index">08</span>
-            <h3>Developments</h3>
-            <p>Eco-friendly, sustainable communities ready for move-in.</p>
-          </article>
-        </div>
-
-        <!-- Solution Detail Blocks -->
-        <div class="solution-details">
-          <div class="detail-block-grid">
-            <!-- Detail: Energy -->
-            <article class="detail-block detail-block-full reveal">
-              <span class="detail-tag">02 · Energy</span>
-              <h4>Powered by the sun. Free from dumsor.</h4>
-              <p class="detail-lead">
-                Every IRES home runs on solar: panels, battery storage and a hybrid inverter that keep the lights, fans and fridge running day and night. Choose solar as your main power source or as backup to the grid. Either way, you can retire the petrol or diesel generator, along with its fumes, noise and fuel bills.
-              </p>
-              <div class="detail-features">
-                <div class="detail-feature">
-                  <strong>Solar as primary:</strong> Run fully off-grid on your own clean power. No monthly electricity bill.
-                </div>
-                <div class="detail-feature">
-                  <strong>Solar as backup:</strong> Stay on the grid and switch to stored solar power whenever the lights go off.
-                </div>
-                <div class="detail-feature">
-                  <strong>Lower emissions:</strong> Clean sunshine replaces burning petrol and diesel.
-                </div>
-                <div class="detail-feature">
-                  <strong>Peace and quiet:</strong> No roaring generator and no exhaust in your compound.
-                </div>
-                <div class="detail-feature">
-                  <strong>Lower bills:</strong> Cool earth walls need less cooling, so the sun goes further.
-                </div>
-              </div>
-            </article>
-
-            <!-- Detail: Water -->
-            <article class="detail-block reveal">
-              <span class="detail-tag">03 · Water</span>
-              <h4>Your own water.</h4>
-              <p class="detail-lead">
-                Borehole water systems: We drill, equip and connect a borehole for your home or community, with storage and solar pumping, so you’re never waiting for the mains.
-              </p>
-              <div class="detail-checklist">
-                <span>Site survey and drilling</span>
-                <span>Water storage tank and plumbing</span>
-                <span>Powered by your clean solar system</span>
-              </div>
-            </article>
-
-            <!-- Detail: Sanitation -->
-            <article class="detail-block reveal">
-              <span class="detail-tag">04 · Sanitation</span>
-              <h4>A cleaner way to handle waste.</h4>
-              <p class="detail-lead">
-                Biodegradable septic: Instead of a conventional septic tank, we install biodigester systems that break waste down naturally, with far less emptying and no bad smells.
-              </p>
-              <div class="detail-checklist">
-                <span>Natural, bacteria-driven treatment</span>
-                <span>Protects groundwater and soil</span>
-                <span>Low maintenance for years</span>
-              </div>
-            </article>
-
-            <!-- Detail: Design -->
-            <article class="detail-block reveal">
-              <span class="detail-tag">05 · Design</span>
-              <h4>Designed for the climate, the site and the way you live.</h4>
-              <p class="detail-lead">
-                Our designers start with how you want to live, then shape the building around sun, breeze and views. Walls are placed for shade and airflow, and every plan is engineered for rammed earth from day one. Already have an architect? We can build fully in rammed earth, or add rammed-earth façades and feature walls to a concrete frame.
-              </p>
-              <div class="detail-checklist">
-                <span>Architecture &amp; 3D visualisation</span>
-                <span>Structural &amp; civil engineering</span>
-                <span>Soil testing &amp; wall sample trials</span>
-                <span>Master planning for estates</span>
-                <span>Mechanical, electrical &amp; plumbing</span>
-                <span>Costing &amp; construction drawings</span>
-              </div>
-            </article>
-
-            <!-- Detail: Décor and botanicals -->
-            <article class="detail-block reveal">
-              <span class="detail-tag">06 · Décor &amp; botanicals</span>
-              <h4>Move in to a finished home, not a shell.</h4>
-              <p class="detail-lead">
-                <strong>Décor &amp; interiors:</strong> Feature walls in the natural colours of local soils, signature details like clay-pot ceilings and hardwood roofs, plus fixtures, finishes and furniture. Homes in our developments come fully furnished.
-              </p>
-              <p class="detail-lead">
-                <strong>Botanicals &amp; landscape:</strong> Native planting, shaded courtyards, food gardens and greenhouse farms that cool the site, feed the household and finish the picture.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ 6. WHAT WE BUILD ============ -->
-      <section class="section" id="what-we-build" data-section="what-we-build" style="background: var(--sand);" aria-labelledby="audiences-title">
-        <span id="who-we-build-for" class="anchor-alias"></span>
-        <div class="section-head reveal">
-          <p class="eyebrow">What we build</p>
-          <h2 id="audiences-title">One way of building, from one home to a whole town.</h2>
-          <p class="section-note">
-            Whether for an individual family or an institutional master plan, IRES delivers end-to-end design and construction with unified accountability.
-          </p>
-        </div>
-
-        <div class="audiences-grid">
-          <article class="audience-card reveal">
-            <span class="audience-badge">Audience</span>
-            <h3>Residential</h3>
-            <p>
-              Private homes and villas, designed around you and built to last generations. Ideal for families building a home in Ghana. We build across Ghana and Africa.
-            </p>
-          </article>
-
-          <article class="audience-card reveal">
-            <span class="audience-badge">Audience</span>
-            <h3>Commercial &amp; institutional</h3>
-            <p>
-              Schools, apartments, hospitality, wellness retreats and offices, where cool interiors, low running costs and lasting walls pay back every year.
-            </p>
-          </article>
-
-          <article class="audience-card reveal">
-            <span class="audience-badge">Audience</span>
-            <h3>Developments</h3>
-            <p>
-              Gated communities with eco-friendly, sustainable amenities. We turn communities into thriving neighbourhoods.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <!-- ============ 7. WAYS TO OWN ============ -->
-      <section class="section" id="ways-to-own" data-section="ways-to-own" style="background: var(--cream);" aria-labelledby="finance-title">
-        <span id="finance" class="anchor-alias"></span>
-        <div class="section-head reveal">
-          <p class="eyebrow">Ways to own</p>
-          <h2 id="finance-title">Four ways to own your piece of earth.</h2>
-          <p class="section-note">
-            We work with you to make funding straightforward, transparent and structured around real project milestones.
-          </p>
-        </div>
-
-        <div class="finance-grid">
-          <article class="finance-card reveal">
-            <span class="finance-badge">Up to 15 years</span>
-            <h3>Developer finance</h3>
-            <p>Spread the cost of your IRES home over up to 15 years, financed directly with us.</p>
-          </article>
-
-          <article class="finance-card reveal">
-            <span class="finance-badge">Interest-free</span>
-            <h3>Interest-free payment plans</h3>
-            <p>Pay in instalments over a shorter term, with no interest.</p>
-          </article>
-
-          <article class="finance-card reveal">
-            <span class="finance-badge">Construction financing</span>
-            <h3>Milestone billing</h3>
-            <p>Building on your own land? Pay in stages as each phase of work is completed and signed off.</p>
-          </article>
-
-          <article class="finance-card reveal">
-            <span class="finance-badge">With banking partners</span>
-            <h3>Mortgage with banking partners</h3>
-            <p>We streamline the process with our banking partners, so getting a mortgage is effortless.</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- ============ 8. HERITAGE & GHANA ============ -->
-      <section class="section" id="heritage" style="background: var(--basalt); color: var(--text-on-dark);" aria-labelledby="heritage-title">
-        <div class="section-head reveal" style="border-bottom-color: var(--rule-dark);">
-          <p class="eyebrow eyebrow-light">Heritage</p>
-          <h2 id="heritage-title" style="color: var(--cream);">The oldest modern building material.</h2>
-          <p class="section-note" style="color: var(--text-on-dark-soft);">
-            Rammed earth is made by compacting damp soil, layer by layer, inside a formwork. Each layer leaves a visible stripe, the strata you see in our logo. People have built this way for thousands of years, and some of those buildings are still standing.
-          </p>
-        </div>
-
-        <div class="heritage-timeline">
-          <div class="timeline-row reveal">
-            <span class="timeline-period">4,000+ years ago</span>
-            <span class="timeline-where">China</span>
-            <span class="timeline-desc">Neolithic towns protect themselves with hāngtǔ, walls of rammed earth.</span>
-          </div>
-
-          <div class="timeline-row reveal">
-            <span class="timeline-period">3rd century BCE on</span>
-            <span class="timeline-where">The Great Wall</span>
-            <span class="timeline-desc">Early and western sections are built from rammed earth.</span>
-          </div>
-
-          <div class="timeline-row reveal">
-            <span class="timeline-period">Centuries</span>
-            <span class="timeline-where">Africa</span>
-            <span class="timeline-desc">Earthen architecture shapes the continent, from the Ksar of Aït-Ben-Haddou in Morocco to the Asante traditional buildings of Ghana.</span>
-          </div>
-
-          <div class="timeline-row reveal">
-            <span class="timeline-period">12th to 20th century</span>
-            <span class="timeline-where">Fujian Tulou, China</span>
-            <span class="timeline-desc">Great round communal homes of earth, now a UNESCO World Heritage Site.</span>
-          </div>
-
-          <div class="timeline-row reveal">
-            <span class="timeline-period">13th to 14th century</span>
-            <span class="timeline-where">The Alhambra, Spain</span>
-            <span class="timeline-desc">Granada’s palace-fortress is built largely of tapial, rammed earth.</span>
-          </div>
-
-          <div class="timeline-row reveal">
-            <span class="timeline-period">1970s to today</span>
-            <span class="timeline-where">The modern revival</span>
-            <span class="timeline-desc">Engineers in Australia and North America refine stabilised rammed earth: tested mixes, steel-reinforced where needed, built to code.</span>
-          </div>
-
-          <div class="timeline-row reveal">
-            <span class="timeline-period">2020s</span>
-            <span class="timeline-where">A Ghanaian resurgence</span>
-            <span class="timeline-desc">From Prampram to Tamale, rammed earth is rising again all over Ghana.</span>
-          </div>
-
-          <div class="timeline-row reveal">
-            <span class="timeline-period" style="color: var(--clay-hot);">Now</span>
-            <span class="timeline-where" style="color: var(--sun);">IRES, a step further</span>
-            <span class="timeline-desc" style="color: var(--cream); font-weight: 500;">IRES takes rammed earth deeper: engineered, solar-powered and complete, for homes, schools, apartments and whole communities across West Africa.</span>
-          </div>
-        </div>
-
-        <!-- Ghana section -->
-        <div class="ghana-section" id="ghana">
-          <div class="section-head reveal" style="border-bottom-color: var(--rule-dark);">
-            <p class="eyebrow eyebrow-light">A Ghanaian resurgence</p>
-            <h2 style="color: var(--cream);">Ghana is building with earth again.</h2>
-            <p class="section-note" style="color: var(--text-on-dark-soft);">
-              All over the country, rammed earth is making a powerful comeback. Homeowners, architects and builders are rediscovering what our ancestors always knew: earth keeps you cool, lasts for generations and belongs to the land.
-            </p>
-          </div>
-
-          <div class="ghana-grid">
-            <div class="ghana-card reveal">
-              <span class="ghana-place">Prampram</span>
-              <span class="ghana-region">Greater Accra coast</span>
-            </div>
-
-            <div class="ghana-card reveal">
-              <span class="ghana-place">Aburi</span>
-              <span class="ghana-region">Eastern Region</span>
-            </div>
-
-            <div class="ghana-card reveal">
-              <span class="ghana-place">Komenda</span>
-              <span class="ghana-region">Central Region</span>
-            </div>
-
-            <div class="ghana-card reveal">
-              <span class="ghana-place">Kumasi</span>
-              <span class="ghana-region">Ashanti Region</span>
-            </div>
-
-            <div class="ghana-card reveal">
-              <span class="ghana-place">Accra</span>
-              <span class="ghana-region">Greater Accra</span>
-            </div>
-
-            <div class="ghana-card reveal">
-              <span class="ghana-place">Tamale</span>
-              <span class="ghana-region">Northern Region</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ MATERIAL TRADITION ============ -->
-      <section class="work section" id="work" aria-labelledby="work-title">
-        <div class="section-head reveal">
-          <p class="eyebrow">Material tradition</p>
-          <h2 id="work-title">Earth is a building practice, not a trend.</h2>
-          <p class="section-note">
-            Across the Sahel, the savannah, and the modern courtyard, earth has been
-            built in layers from what the ground already gives. IRES works inside that
-            tradition and brings current engineering to it.
-          </p>
-        </div>
-
-        <div class="work-grid">
-          <figure class="tile tile-wide reveal">
-            <picture>
-              <source srcset="assets/img/oculus-courtyard.webp" type="image/webp" />
-              <img
-                src="assets/img/oculus-courtyard.jpg"
-                alt="Curved rammed earth courtyard walls opening to a large circular oculus above planted beds"
-                width="1500" height="844" loading="lazy" decoding="async"
-              />
-            </picture>
-            <figcaption>
-              <strong>Courtyard and oculus</strong>
-              <span>Daylight treated as a structural element</span>
-            </figcaption>
-          </figure>
-
-          <figure class="tile tile-tall reveal">
-            <picture>
-              <source srcset="assets/img/african-facade.webp" type="image/webp" />
-              <img
-                src="assets/img/african-facade.jpg"
-                alt="Mud brick building with a relief-patterned entrance facade and turret forms"
-                width="1400" height="933" loading="lazy" decoding="async"
-              />
-            </picture>
-            <figcaption>
-              <strong>Relief-patterned facade</strong>
-              <span>Surface depth used for shade and cooling</span>
-            </figcaption>
-          </figure>
-
-          <figure class="tile reveal">
-            <picture>
-              <source srcset="assets/img/sahel-village.webp" type="image/webp" />
-              <img
-                src="assets/img/sahel-village.jpg"
-                alt="Domed earthen structures standing in a dry valley below rocky hills"
-                width="1300" height="867" loading="lazy" decoding="async"
-              />
-            </picture>
-            <figcaption>
-              <strong>Domed earth cluster</strong>
-              <span>Geometry that sheds heat and rain</span>
-            </figcaption>
-          </figure>
-
-          <figure class="tile reveal">
-            <picture>
-              <source srcset="assets/img/ochre-compound.webp" type="image/webp" />
-              <img
-                src="assets/img/ochre-compound.jpg"
-                alt="Ochre earthen compound with crenellated parapet walls under a clear blue sky"
-                width="1400" height="933" loading="lazy" decoding="async"
-              />
-            </picture>
-            <figcaption>
-              <strong>Compound wall and parapet</strong>
-              <span>Enclosure, shade, and defence in one line</span>
-            </figcaption>
-          </figure>
-
-          <figure class="tile reveal">
-            <picture>
-              <source srcset="assets/img/earth-glowing-dusk.webp" type="image/webp" />
-              <img
-                src="assets/img/earth-glowing-dusk.jpg"
-                alt="Earth-sheltered building glowing with warm light against a blue dusk hillside"
-                width="1400" height="933" loading="lazy" decoding="async"
-              />
-            </picture>
-            <figcaption>
-              <strong>Earth-sheltered form</strong>
-              <span>The ground itself used as insulation</span>
-            </figcaption>
-          </figure>
-        </div>
-
-        <p class="work-note">Reference photography of earth architecture.</p>
-      </section>
-
-      <!-- ============ 9. HOW IT WORKS ============ -->
-      <section class="process section" id="process" aria-labelledby="process-title">
-        <div class="section-head reveal">
-          <p class="eyebrow">How IRES works</p>
-          <h2 id="process-title">Clear stages, connected decisions.</h2>
-          <p class="section-note">
-            From first conversation to moving in, every step is coordinated by one accountable team.
-          </p>
-        </div>
-
-        <ol class="process-track">
-          <li class="reveal">
-            <span class="step-rail" aria-hidden="true"></span>
-            <span class="step-num">01</span>
-            <h3>Tell us about your land</h3>
-            <p>Your land, your family and your dream.</p>
-          </li>
-          <li class="reveal">
-            <span class="step-rail" aria-hidden="true"></span>
-            <span class="step-num">02</span>
-            <h3>We design the whole</h3>
-            <p>Architecture, energy, water and sanitation planned together, with clear estimates up front.</p>
-          </li>
-          <li class="reveal">
-            <span class="step-rail" aria-hidden="true"></span>
-            <span class="step-num">03</span>
-            <h3>We build in stages</h3>
-            <p>Milestone payments tied to finished work, with regular progress reports.</p>
-          </li>
-          <li class="reveal">
-            <span class="step-rail" aria-hidden="true"></span>
-            <span class="step-num">04</span>
-            <h3>You move in</h3>
-            <p>A finished home, not a shell.</p>
-          </li>
-        </ol>
-      </section>
-
-      <!-- ============ 10. CLOSING SUMMARY ============ -->
-      <section class="why section" id="closing-summary" style="background: var(--sage-deep);" aria-labelledby="summary-title">
-        <div class="why-copy reveal">
-          <p class="eyebrow eyebrow-light">One partner. One home.</p>
-          <h2 id="summary-title" style="color: var(--cream);">Built from the earth, powered by the sun.</h2>
-          <p>
-            One accountable team, milestone payments, solar power, your own water, and walls built to last generations across Ghana and West Africa.
-          </p>
-        </div>
-
-        <figure class="why-media reveal">
-          <picture>
-            <source srcset="assets/img/earthen-arch.webp" type="image/webp" />
-            <img
-              src="assets/img/earthen-arch.jpg"
-              alt="Tall rammed earth wall with a deep arch opening catching low sunlight"
-              width="900" height="1350" loading="lazy" decoding="async"
-            />
-          </picture>
-        </figure>
-
-        <div class="summary-grid" style="grid-column: 1 / -1;">
-          <div class="summary-card reveal">
-            <span class="summary-title">Walls that last generations</span>
-            <p class="summary-desc">Cool, mould-resistant, low-maintenance rammed earth.</p>
-          </div>
-
-          <div class="summary-card reveal">
-            <span class="summary-title">Power from the sun</span>
-            <p class="summary-desc">No dumsor, no generator noise or fumes.</p>
-          </div>
-
-          <div class="summary-card reveal">
-            <span class="summary-title">Your own water</span>
-            <p class="summary-desc">Borehole supply and clean biodigester sanitation.</p>
-          </div>
-
-          <div class="summary-card reveal">
-            <span class="summary-title">Designed and finished</span>
-            <p class="summary-desc">Architecture, interiors and landscaping in one contract.</p>
-          </div>
-
-          <div class="summary-card reveal">
-            <span class="summary-title">Finance that fits</span>
-            <p class="summary-desc">Up to 15 years, interest-free plans or a mortgage.</p>
-          </div>
-
-          <div class="summary-card reveal">
-            <span class="summary-title">Kinder to the planet</span>
-            <p class="summary-desc">Local earth, clean energy, lower emissions.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ 11. START YOUR BUILD / CONTACT ============ -->
-      <section class="contact" id="start" data-section="start" aria-labelledby="contact-title">
-        <span id="contact" class="anchor-alias"></span>
-        <div class="contact-panel">
-          <div class="contact-copy reveal">
-            <p class="eyebrow eyebrow-light">Begin your home</p>
-            <h2 id="contact-title">Let’s build your home.</h2>
-            <p>
-              Tell us about your land, your family and your dream. We’ll handle the rest.
-            </p>
-            <ol class="next-steps">
-              <li><span>1</span> We read your note and study the site.</li>
-              <li><span>2</span> We come back with the questions that matter.</li>
-              <li><span>3</span> You get a first view of the systems that fit.</li>
-            </ol>
-
-            <div class="contact-direct">
-              <div class="contact-direct-item">
-                <span class="contact-direct-label">Location</span>
-                <span class="contact-direct-value">Accra, Ghana</span>
-              </div>
-              <div class="contact-direct-item">
-                <span class="contact-direct-label">Phone / WhatsApp</span>
-                <span class="contact-direct-value">
-                  <a href="https://wa.me/233209669000?text=Hello%20IRES%2C%20I%20would%20like%20to%20talk%20about%20building%20a%20home." data-analytics="whatsapp" data-location="contact-page">+233 20 966 9000</a>
-                </span>
-              </div>
-              <div class="contact-direct-item">
-                <span class="contact-direct-label">Email</span>
-                <span class="contact-direct-value">
-                  <a href="mailto:contact@iresglobal.com">contact@iresglobal.com</a>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <form class="contact-form reveal" novalidate method="POST" action="https://2s128tbbya.execute-api.eu-west-1.amazonaws.com/enquiries">
-            <div class="field">
-              <label for="f-name">Name</label>
-              <input id="f-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="100" placeholder="Your full name" required />
-              <p class="field-error" data-error-for="name"></p>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label for="f-country">Country you live in</label>
-                <select id="f-country" name="country">
-                  <option value="GH" selected>Ghana (+233)</option>
-                  <option value="NG">Nigeria (+234)</option>
-                  <option value="GB">United Kingdom (+44)</option>
-                  <option value="US">United States (+1)</option>
-                  <option value="CA">Canada (+1)</option>
-                  <option value="DE">Germany (+49)</option>
-                  <option value="NL">Netherlands (+31)</option>
-                  <option value="FR">France (+33)</option>
-                  <option value="IT">Italy (+39)</option>
-                  <option value="AE">United Arab Emirates (+971)</option>
-                  <option value="ZA">South Africa (+27)</option>
-                  <option value="KE">Kenya (+254)</option>
-                  <option value="CN">China (+86)</option>
-                  <option value="IN">India (+91)</option>
-                </select>
-                <p class="field-error" data-error-for="country"></p>
-              </div>
-
-              <div class="field">
-                <label for="f-phone">Phone / WhatsApp</label>
-                <input id="f-phone" type="tel" name="phone" placeholder="+233 20 966 9000" autocomplete="tel" required />
-                <p class="field-error" data-error-for="phone"></p>
-              </div>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label for="f-plan">Project type</label>
-                <select id="f-plan" name="plan" required>
-                  <option value="residential" selected>Residential (private home or villa)</option>
-                  <option value="commercial-institutional">Commercial or institutional (school, apartments, hospitality)</option>
-                  <option value="developments">Developments (gated community)</option>
-                  <option value="not-sure">Not sure yet</option>
-                </select>
-                <p class="field-error" data-error-for="plan"></p>
-              </div>
-
-              <div class="field">
-                <label for="f-location">Where will you build</label>
-                <input id="f-location" type="text" name="location" maxlength="120" placeholder="Town, region, or country" />
-                <p class="field-error" data-error-for="location"></p>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-message">Tell us about your project</label>
-              <textarea id="f-message" name="message" rows="4" placeholder="Tell us about your land, your timeline, or any questions..."></textarea>
-              <p class="field-error" data-error-for="message"></p>
-            </div>
-
-            <div class="field">
-              <label class="consent" for="f-consent">
-                <input id="f-consent" type="checkbox" name="consent" value="yes" required />
-                <span>I agree that IRES may contact me about my enquiry. Read our <a href="privacy.html">privacy policy</a>.</span>
-              </label>
-              <p class="field-error" data-error-for="consent"></p>
-            </div>
-
-            <div class="hp-field" aria-hidden="true">
-              <label for="f-website">Website</label>
-              <input id="f-website" type="text" name="website" tabindex="-1" autocomplete="off" />
-            </div>
-
-            <button type="submit" data-analytics="start_build_click" data-location="start-section">Tell us about your project</button>
-            <div class="form-status" role="status" aria-live="polite"></div>
-          </form>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">
@@ -1014,12 +233,12 @@
       <div class="footer-row">
         <span class="footer-mark">IRES</span>
         <nav aria-label="Footer">
-          <a href="#why-ires">Why IRES?</a>
-          <a href="#how-we-create-value">How we create value</a>
-          <a href="#what-we-build">What we build</a>
-          <a href="#ways-to-own">Ways to own</a>
-          <a href="#about-ires">About</a>
-          <a href="#start">Contact</a>
+          <a href="why-ires.html">Why IRES?</a>
+          <a href="how-we-create-value.html">How we create value</a>
+          <a href="what-we-build.html">What we build</a>
+          <a href="ways-to-own.html">Ways to own</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
           <a href="privacy.html">Privacy</a>
           <a href="cookie-policy.html">Cookie policy</a>
         </nav>
@@ -1027,6 +246,6 @@
       <p class="footer-line">Innovative Rammed Earth Solutions. Earth becomes home.</p>
     </footer>
 
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=5"></script>
   </body>
 </html>

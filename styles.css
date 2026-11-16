@@ -686,7 +686,7 @@ h3 {
   border-bottom: 1px solid var(--rule);
 }
 
-.section-head h2 {
+.section-head :is(h1, h2) {
   grid-column: 1;
   max-width: 20ch;
 }
@@ -709,7 +709,7 @@ h3 {
   background: var(--cream);
 }
 
-.foundation h2 {
+.foundation :is(h1, h2) {
   max-width: 14ch;
 }
 
@@ -880,7 +880,7 @@ h3 {
   content: "";
 }
 
-.material h2 {
+.material :is(h1, h2) {
   max-width: 17ch;
   color: var(--cream);
 }
@@ -1176,7 +1176,7 @@ h3 {
   color: var(--text-on-dark);
 }
 
-.contact h2 {
+.contact :is(h1, h2) {
   max-width: 16ch;
   color: var(--cream);
 }
@@ -2096,7 +2096,7 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  .section-head h2,
+  .section-head :is(h1, h2),
   .section-head .eyebrow,
   .section-head .section-note {
     grid-column: 1;
@@ -2334,4 +2334,34 @@ textarea:focus {
     transform: none;
     clip-path: none;
   }
+}
+
+/* ---------- Standalone content pages ---------- */
+.inner-page main {
+  padding-top: 5rem;
+}
+
+.inner-page h1 {
+  font-size: clamp(1.9rem, 4.6vw, 3.65rem);
+  line-height: 0.98;
+}
+
+.inner-page .site-header {
+  color: var(--earth-deep);
+  background: var(--cream);
+  box-shadow: 0 1px 0 var(--rule);
+}
+
+.inner-page .nav-cta {
+  border-color: var(--earth-deep);
+  background: var(--earth-deep);
+  color: var(--cream);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--clay);
+}
+
+.site-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
 }

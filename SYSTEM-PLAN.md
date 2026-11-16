@@ -50,16 +50,17 @@ Our implementation keeps the exact architecture, guarantees, and contracts of th
 - **Place names**: Verified place names only (Prampram, Aburi, Komenda, Kumasi, Accra, Tamale).
 - **Automated Check**: `tools/guardrail-check.js` validates all guardrails on build and pull request.
 
-### 3. Canonical Slugs & Legacy Hash Redirects (Brief Page 24 & 25)
-- Canonical sections on the homepage:
-  - `#about-ires` (Our Philosophy & About)
-  - `#why-ires` (Why IRES?)
-  - `#how-we-create-value` (How We Create Value)
-  - `#what-we-build` (What We Build)
-  - `#ways-to-own` (Ways to Own)
-  - `#start` (Start Your Build / Contact)
-- A 15-line synchronous redirect script in `<head>` maps historical bookmark hashes (`#why-rammed-earth`, `#solutions`, `#who-we-build-for`, `#finance`, `#about`, `#contact`, `#top`) instantly before first paint.
-- `#start` and `#contact` automatically smooth-scroll to the enquiry form and focus the name input.
+### 3. Standalone Pages & Legacy Links
+- The homepage contains the hero and three core promises, with detailed content on six separate pages:
+  - `why-ires.html`: rammed earth benefits, problems we solve and the IRES promises.
+  - `how-we-create-value.html`: integrated services and the build process.
+  - `what-we-build.html`: building types and material imagery.
+  - `ways-to-own.html`: the four finance options, in the established order.
+  - `about.html`: company values, heritage and Ghanaian context.
+  - `contact.html`: the enquiry form and direct contact details.
+- Header and footer navigation, hero actions and legal-page contact links open these pages directly. The logo returns to `index.html`.
+- A synchronous homepage redirect preserves legacy and former canonical hash links, including campaign query parameters. It also handles hashes changed after load.
+- Each content page has its own title, description, canonical URL, WebPage structured data and H1. All six pages are listed in the sitemap.
 
 ### 4. Enquiry API Response Contract (Brief Page 14)
 The Lambda endpoint adheres strictly to the API contract:

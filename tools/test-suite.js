@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert/strict";
+import vm from "node:vm";
 
 const ROOT = process.cwd();
 
@@ -17,7 +18,7 @@ const BANNED_PHRASES = [
   "Cantonments, Accra",
 ];
 
-const htmlFiles = ["index.html", "privacy.html", "cookie-policy.html", "thank-you.html", "404.html"];
+const htmlFiles = fs.readdirSync(ROOT).filter((file) => file.endsWith(".html"));
 
 for (const file of htmlFiles) {
   const content = fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -32,65 +33,103 @@ console.log("   ✓ Zero banned phrases found across all HTML files.");
 
 // Check exactly 4 finance options
 const indexHtml = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
-const financeCards = indexHtml.match(/class="finance-card/g) || [];
+const financeHtml = fs.readFileSync(path.join(ROOT, "ways-to-own.html"), "utf8");
+const financeCards = financeHtml.match(/class="finance-card/g) || [];
 assert.equal(financeCards.length, 4, `Expected exactly 4 finance options, found ${financeCards.length}`);
 console.log("   ✓ Exactly 4 finance options present in fixed order.");
 
-// --- 2. Redirect Table Test ---
-console.log("\n2. Running Redirect Table Tests...");
-const REDIRECT_TABLE = [
-  { old: "#why-rammed-earth", target: "#why-ires" },
-  { old: "#solutions", target: "#how-we-create-value" },
-  { old: "#who-we-build-for", target: "#what-we-build" },
-  { old: "#finance", target: "#ways-to-own" },
-  { old: "#about", target: "#about-ires" },
-  { old: "#contact", target: "#start" },
-  { old: "#top", target: "" },
-];
+// --- 2. Legacy bookmark redirects (execute the browser script) ---
+console.log("\n2. Testing Legacy Bookmark Redirects...");
+const REDIRECT_TABLE = {
+  "#why-ires": "why-ires.html",
+  "#how-we-create-value": "how-we-create-value.html",
+  "#what-we-build": "what-we-build.html",
+  "#ways-to-own": "ways-to-own.html",
+  "#about-ires": "about.html",
+  "#start": "contact.html",
+  "#why-rammed-earth": "why-ires.html",
+  "#solutions": "how-we-create-value.html",
+  "#who-we-build-for": "what-we-build.html",
+  "#finance": "ways-to-own.html",
+  "#about": "about.html",
+  "#our-philosophy": "about.html",
+  "#contact": "contact.html",
+  "#heritage": "about.html#heritage",
+  "#ghana": "about.html#ghana",
+  "#work": "what-we-build.html#work",
+  "#process": "how-we-create-value.html#process",
+  "#problems": "why-ires.html#problems",
+  "#closing-summary": "why-ires.html#closing-summary",
+  "#top": ""
+};
+const redirectScript = indexHtml.match(/<script id="legacy-navigation">([\s\S]*?)<\/script>/)?.[1];
+assert(redirectScript, "Missing legacy bookmark handler");
+for (const [hash, target] of Object.entries(REDIRECT_TABLE)) {
+  let destination;
+  const location = new URL(`https://iresglobal.com/?utm_source=bookmark${hash}`);
+  location.replace = (url) => { destination = new URL(url, location); };
+  const listeners = {};
+  const window = {
+    location,
+    history: { replaceState: (_state, _title, url) => { destination = new URL(url, location); } },
+    addEventListener: (name, handler) => { listeners[name] = handler; },
+  };
+  vm.runInNewContext(redirectScript, { window, URL });
+  const expected = new URL(target || "/", location);
+  expected.search = location.search;
+  assert.equal(destination?.href, expected.href, `Incorrect redirect for ${hash}`);
+  // Also exercise bookmarks entered after the page loads.
+  destination = undefined;
+  listeners.hashchange();
+  assert.equal(destination?.href, expected.href, `Hash change failed for ${hash}`);
+}
+console.log(`   ✓ All ${Object.keys(REDIRECT_TABLE).length} bookmarks preserve campaign parameters and reach the correct page.`);
 
-for (const row of REDIRECT_TABLE) {
-  assert(
-    indexHtml.includes(`'${row.old}': '${row.target}'`),
-    `Redirect script missing mapping for ${row.old}`
-  );
-  if (row.target) {
-    const slug = row.target.replace("#", "");
-    assert(
-      indexHtml.includes(`id="${slug}"`),
-      `Target slug "${slug}" does not exist as an element ID in index.html`
-    );
+// --- 3. Page navigation and internal destinations ---
+console.log("\n3. Testing Standalone Pages and Internal Links...");
+const pageFiles = ["why-ires.html", "how-we-create-value.html", "what-we-build.html", "ways-to-own.html", "about.html", "contact.html"];
+for (const file of ["index.html", ...pageFiles]) {
+  const content = fs.readFileSync(path.join(ROOT, file), "utf8");
+  const nav = content.match(/<nav class="site-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+  assert(nav, `Missing primary navigation in ${file}`);
+  const navLinks = [...nav.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(navLinks, pageFiles, `Navigation should open all six pages in ${file}`);
+  assert.equal((content.match(/<h1\b/g) || []).length, 1, `Expected one H1 in ${file}`);
+  if (file !== "index.html") {
+    assert(nav.includes(`href="${file}" aria-current="page"`), `Missing active page in ${file}`);
+    assert(content.includes(`rel="canonical" href="https://iresglobal.com/${file}"`), `Incorrect canonical in ${file}`);
+    const graph = JSON.parse(content.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+    const webpage = graph["@graph"].find((item) => item["@type"] === "WebPage");
+    assert.equal(webpage.url, `https://iresglobal.com/${file}`, `Incorrect structured page URL in ${file}`);
   }
 }
-console.log(`   ✓ All ${REDIRECT_TABLE.length} legacy redirect mappings verified.`);
-
-// --- 3. Internal Links Resolution Test ---
-console.log("\n3. Testing Internal Link Resolutions...");
-const linkRegex = /href="([^"#][^"]*)"/g;
-let match;
+assert.equal((indexHtml.match(/<section\b/g) || []).length, 1, "Homepage should contain only the hero and core promises");
+assert(!/<form\b[^>]*class="[^"]*\bcontact-form\b/.test(indexHtml), "Contact form must live on the contact page");
+const contactHtml = fs.readFileSync(path.join(ROOT, "contact.html"), "utf8");
+assert(/<form\b[^>]*class="[^"]*\bcontact-form\b/.test(contactHtml), "Contact form missing from its page");
+assert(contactHtml.includes('id="f-name"'), "Contact form lost the name field");
+const financeNames = [...financeHtml.matchAll(/<h3>([^<]+)<\/h3>/g)].map((match) => match[1]);
+assert.deepEqual(financeNames, ["Developer finance", "Interest-free payment plans", "Milestone billing", "Mortgage with banking partners"]);
 let resolvedCount = 0;
-
 for (const file of htmlFiles) {
   const content = fs.readFileSync(path.join(ROOT, file), "utf8");
-  while ((match = linkRegex.exec(content)) !== null) {
+  for (const match of content.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const targetUrl = match[1];
-    // Skip external or protocol links
-    if (
-      targetUrl.startsWith("http://") ||
-      targetUrl.startsWith("https://") ||
-      targetUrl.startsWith("tel:") ||
-      targetUrl.startsWith("mailto:")
-    ) {
-      continue;
-    }
-    const pathWithoutQuery = targetUrl.split("?")[0].split("#")[0];
-    const cleanPath = decodeURIComponent(pathWithoutQuery.replace(/^\//, ""));
-    if (cleanPath === "") continue; // Root home link (e.g. "/", "/#start")
+    if (/^(?:https?:|tel:|mailto:|data:)/.test(targetUrl)) continue;
+    const url = new URL(targetUrl, `https://iresglobal.com/${file}`);
+    const cleanPath = decodeURIComponent(url.pathname.replace(/^\//, "")) || "index.html";
     const localTarget = path.join(ROOT, cleanPath);
-    assert(fs.existsSync(localTarget), `Broken internal link in ${file}: ${targetUrl}`);
+    assert(fs.existsSync(localTarget), `Broken internal link or asset in ${file}: ${targetUrl}`);
+    if (url.hash && cleanPath.endsWith(".html")) {
+      const target = fs.readFileSync(localTarget, "utf8");
+      assert(target.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`), `Missing anchor in ${file}: ${targetUrl}`);
+    }
     resolvedCount++;
   }
 }
-console.log(`   ✓ All ${resolvedCount} internal file links resolve properly.`);
+const sitemap = fs.readFileSync(path.join(ROOT, "sitemap.xml"), "utf8");
+for (const file of pageFiles) assert(sitemap.includes(`https://iresglobal.com/${file}`), `Missing sitemap page: ${file}`);
+console.log(`   ✓ Six page destinations, active navigation, headings, form, finance order, sitemap and ${resolvedCount} internal links/assets verified.`);
 
 // --- 4. Phone Normalisation Unit Tests ---
 console.log("\n4. Running Phone Normalisation Tests...");

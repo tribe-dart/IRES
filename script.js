@@ -49,6 +49,25 @@ document.addEventListener("click", (event) => {
   }
 });
 
+/* ---------- Keep enquiry attribution across standalone pages ---------- */
+const campaignParams = new URLSearchParams(window.location.search);
+const campaignKeys = ["utm_source", "utm_medium", "utm_campaign"];
+if (campaignKeys.some((key) => campaignParams.has(key))) {
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href.startsWith("#")) return;
+    const destination = new URL(href, window.location.href);
+    if (destination.origin !== window.location.origin) return;
+    if (!destination.pathname.endsWith(".html") && !destination.pathname.endsWith("/")) return;
+    campaignKeys.forEach((key) => {
+      if (campaignParams.has(key) && !destination.searchParams.has(key)) {
+        destination.searchParams.set(key, campaignParams.get(key));
+      }
+    });
+    link.setAttribute("href", destination.pathname + destination.search + destination.hash);
+  });
+}
+
 /* ---------- Reveal on scroll ---------- */
 const revealItems = Array.from(document.querySelectorAll(".reveal"));
 
@@ -169,24 +188,6 @@ if (navToggle && siteNav && header) {
   window.matchMedia("(min-width: 1101px)").addEventListener("change", (event) => {
     if (event.matches) setMenuOpen(false);
   });
-}
-
-/* ---------- Anchor landing handler ---------- */
-function handleHashScroll() {
-  const h = window.location.hash;
-  if (h === "#start" || h === "#contact") {
-    const startEl = document.getElementById("start");
-    if (startEl) {
-      startEl.scrollIntoView({ behavior: "smooth" });
-      const nameField = document.getElementById("f-name");
-      if (nameField) nameField.focus();
-    }
-  }
-}
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", handleHashScroll);
-} else {
-  handleHashScroll();
 }
 
 /* ---------- Contact form ---------- */
